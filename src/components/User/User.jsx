@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React from 'react';
+import Dashboard from './Dashboard';
 const User = () => {
   return (
-    <div>User</div>
-  )
+    <>
+    <Dashboard/>
+    </>
+  );
 }
 
-export default User
+export default User;
