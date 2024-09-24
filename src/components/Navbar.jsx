@@ -45,6 +45,14 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },justifyContent:'space-evenly' }}>
               <Products/>
+              <Button
+              component={Link}
+              to="/shop"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'black', display: 'block',marginLeft:4 }}
+            >
+              Shop
+            </Button>
             <Button
               component={Link}
               to="/blog"

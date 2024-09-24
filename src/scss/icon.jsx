@@ -70,3 +70,96 @@ export function CompletedOrdersIcon() {
 
   );
 }
+export function Done() {
+  return (
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" fill="#EAF7E9"/>
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" stroke="#D5F0D3"/>
+<path d="M25.875 19.875L17.625 28.125L13.5 24" stroke="#2DB324" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34.4999 19.875L26.2499 28.125L24.0562 25.9313" stroke="#2DB324" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  );
+}
+export function UserIconHistory() {
+  return (
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" fill="#EAF6FE"/>
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" stroke="#D5EDFD"/>
+<path d="M24 27C27.3137 27 30 24.3137 30 21C30 17.6863 27.3137 15 24 15C20.6863 15 18 17.6863 18 21C18 24.3137 20.6863 27 24 27Z" stroke="#2DA5F3" stroke-width="1.5" stroke-miterlimit="10"/>
+<path d="M14.9062 32.2499C15.8278 30.6534 17.1533 29.3277 18.7496 28.406C20.3459 27.4843 22.1567 26.999 24 26.999C25.8433 26.999 27.6541 27.4843 29.2504 28.406C30.8467 29.3277 32.1722 30.6534 33.0938 32.2499" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+  );
+}
+
+export function LocalIcon() {
+  return (
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" fill="#EAF6FE"/>
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" stroke="#D5EDFD"/>
+<path d="M17.25 33.75H30.75" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M31.5 21.75C31.5 28.5 24 33.75 24 33.75C24 33.75 16.5 28.5 16.5 21.75C16.5 19.7609 17.2902 17.8532 18.6967 16.4467C20.1032 15.0402 22.0109 14.25 24 14.25C25.9891 14.25 27.8968 15.0402 29.3033 16.4467C30.7098 17.8532 31.5 19.7609 31.5 21.75V21.75Z" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 24.75C25.6569 24.75 27 23.4069 27 21.75C27 20.0931 25.6569 18.75 24 18.75C22.3431 18.75 21 20.0931 21 21.75C21 23.4069 22.3431 24.75 24 24.75Z" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  );
+}
+
+export function InWay() {
+  return (
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" fill="#EAF6FE"/>
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" stroke="#D5EDFD"/>
+<path d="M21 29.25L15 30.75V17.25L21 15.75" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27 32.25L21 29.25V15.75L27 18.75V32.25Z" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27 18.75L33 17.25V30.75L27 32.25" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  );
+}
+
+export function CompleteIcon() {
+  return (
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" fill="#EAF7E9"/>
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" stroke="#D5F0D3"/>
+<path d="M28.125 21.75L22.6219 27L19.875 24.375" stroke="#2DB324" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 33C28.9706 33 33 28.9706 33 24C33 19.0294 28.9706 15 24 15C19.0294 15 15 19.0294 15 24C15 28.9706 19.0294 33 24 33Z" stroke="#2DB324" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  );
+}
+
+export function ConfirmIcon() {
+  return (
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" fill="#EAF6FE"/>
+<rect x="0.5" y="0.5" width="47" height="47" rx="1.5" stroke="#D5EDFD"/>
+<path d="M21 24H27" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21 27H27" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.25 15.75H30.75C30.9489 15.75 31.1397 15.829 31.2803 15.9697C31.421 16.1103 31.5 16.3011 31.5 16.5V30.75C31.5 31.3467 31.2629 31.919 30.841 32.341C30.419 32.7629 29.8467 33 29.25 33H18.75C18.1533 33 17.581 32.7629 17.159 32.341C16.7371 31.919 16.5 31.3467 16.5 30.75V16.5C16.5 16.3011 16.579 16.1103 16.7197 15.9697C16.8603 15.829 17.0511 15.75 17.25 15.75V15.75Z" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.5 14.25V17.25" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 14.25V17.25" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M28.5 14.25V17.25" stroke="#2DA5F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  );
+}
+
+export function VisaIcon() {
+  return (
+<svg width="45" height="29" viewBox="0 0 45 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.5 27.2904C44.5 28.2402 43.7727 29 42.8636 29H2.13636C1.22727 29 0.5 28.2402 0.5 27.2904V1.70961C0.5 0.759828 1.22727 0 2.13636 0H42.8636C43.7727 0 44.5 0.759828 44.5 1.70961V27.2904Z" fill="white"/>
+<path d="M17.2268 8.4214L12.3177 20.6419H9.10559L6.68134 10.8908C6.56013 10.321 6.37832 10.0677 5.95407 9.81441C5.2268 9.4345 4.01468 8.99127 2.98438 8.80132L3.04498 8.4214H8.1965C8.86316 8.4214 9.46923 8.86464 9.59044 9.68778L10.8632 16.7795L14.0147 8.48472H17.2268V8.4214ZM29.7723 16.6528C29.7723 13.4236 25.5298 13.2336 25.5298 11.8406C25.5298 11.3974 25.9541 10.9542 26.8026 10.8275C27.2268 10.7642 28.4389 10.7009 29.7723 11.3974L30.3177 8.80132C29.5904 8.54804 28.6813 8.23145 27.4692 8.23145C24.4995 8.23145 22.3783 9.87773 22.3783 12.2838C22.3783 14.0568 23.8935 15.0066 25.045 15.5764C26.1965 16.1463 26.6207 16.5262 26.6207 17.0961C26.6207 17.9192 25.7117 18.2991 24.8026 18.2991C23.2874 18.2991 22.3783 17.8559 21.7117 17.5393L21.1662 20.1987C21.8935 20.5153 23.1662 20.8319 24.4995 20.8319C27.651 20.8319 29.7116 19.1856 29.7723 16.6528ZM37.6511 20.6419H40.4389L38.0147 8.4214H35.4086C34.8026 8.4214 34.3177 8.80132 34.1359 9.30787L29.5904 20.6419H32.742L33.348 18.8057H37.2268L37.6511 20.6419ZM34.2571 16.3363L35.8329 11.7773L36.742 16.3363H34.2571ZM21.5298 8.4214L19.045 20.6419H16.0147L18.4995 8.4214H21.5298Z" fill="#1A1F71"/>
+</svg>
+ );
+}
+
+export function BankIcon() {
+  return (
+<svg width="37" height="33" viewBox="0 0 37 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.4017 7.85217H13.6924V25.1486H23.4017V7.85217Z" fill="#FF5F00"/>
+<path d="M14.3091 16.4996C14.3076 14.8339 14.6884 13.1896 15.4227 11.6913C16.1569 10.193 17.2254 8.87987 18.5473 7.85144C16.9103 6.57594 14.9444 5.78272 12.8742 5.56246C10.804 5.34219 8.71311 5.70375 6.84041 6.60583C4.9677 7.50791 3.3888 8.91411 2.28417 10.6637C1.17954 12.4133 0.59375 14.4356 0.59375 16.4996C0.59375 18.5636 1.17954 20.586 2.28417 22.3356C3.3888 24.0852 4.9677 25.4914 6.84041 26.3934C8.71311 27.2955 10.804 27.6571 12.8742 27.4368C14.9444 27.2166 16.9103 26.4233 18.5473 25.1478C17.2254 24.1194 16.1569 22.8063 15.4227 21.308C14.6884 19.8097 14.3076 18.1654 14.3091 16.4996Z" fill="#EB001B"/>
+<path d="M36.4999 16.4996C36.4999 18.5636 35.9142 20.586 34.8096 22.3355C33.7051 24.0851 32.1262 25.4913 30.2536 26.3934C28.3809 27.2955 26.29 27.6571 24.2198 27.4368C22.1496 27.2165 20.1838 26.4233 18.5469 25.1478C19.8676 24.1184 20.9352 22.8051 21.6694 21.307C22.4035 19.8089 22.785 18.1651 22.785 16.4996C22.785 14.8341 22.4035 13.1904 21.6694 11.6923C20.9352 10.1942 19.8676 8.88091 18.5469 7.85144C20.1838 6.57593 22.1496 5.78272 24.2198 5.56245C26.29 5.34219 28.3809 5.70377 30.2536 6.60586C32.1262 7.50794 33.7051 8.91414 34.8096 10.6637C35.9142 12.4133 36.4999 14.4357 36.4999 16.4996Z" fill="#F79E1B"/>
+<path d="M35.4415 23.3184V22.9643H35.5856V22.8922H35.2188V22.9643H35.3628V23.3184H35.4415ZM36.1537 23.3184V22.8915H36.0413L35.9119 23.1851L35.7826 22.8915H35.6701V23.3184H35.7495V22.9964L35.8707 23.274H35.9531L36.0744 22.9957V23.3184H36.1537Z" fill="#F79E1B"/>
+</svg>
+ );
+}
+
+
