@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton, Box } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link } from 'react-router-dom';
 
 const rows = [
-  { id: '#96457961', status: 'IN PROGRESS', date: 'Dec 30, 2019 07:52', total: '$80 (5 Products)'},
+  { id: '#96457961', status: 'IN PROGRESS', date: 'Dec 30, 2019 07:52', total: '$80 (5 Products)' },
   { id: '#71676167', status: 'COMPLETED', date: 'Dec 7, 2019 23:26', total: '$70 (4 Products)' },
   { id: '#12345678', status: 'CANCELED', date: 'Dec 1, 2019 11:30', total: '$50 (3 Products)' },
-  { id: '#96457961', status: 'IN PROGRESS', date: 'Dec 30, 2019 07:52', total: '$80 (5 Products)'},
-  { id: '#71676167', status: 'COMPLETED', date: 'Dec 7, 2019 23:26', total: '$70 (4 Products)' },
-  { id: '#12345678', status: 'CANCELED', date: 'Dec 1, 2019 11:30', total: '$50 (3 Products)' },
-  { id: '#96457961', status: 'IN PROGRESS', date: 'Dec 30, 2019 07:52', total: '$80 (5 Products)'},
-  { id: '#71676167', status: 'COMPLETED', date: 'Dec 7, 2019 23:26', total: '$70 (4 Products)' },
-  { id: '#12345678', status: 'CANCELED', date: 'Dec 1, 2019 11:30', total: '$50 (3 Products)' },
+  // Add more unique rows as needed
 ];
 
 function getStatusColor(status) {
@@ -33,10 +29,18 @@ function OrderHistory() {
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
 
+  const handlePrevPage = () => {
+    if (page > 0) setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    if (page < Math.ceil(rows.length / rowsPerPage) - 1) setPage(page + 1);
+  };
+
   return (
     <>
       <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table aria-label="Order history table">
           <TableHead>
             <TableRow>
               <TableCell>Order ID</TableCell>
@@ -47,23 +51,27 @@ function OrderHistory() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow key={row.id}>
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+              <TableRow key={row.id + index}> {/* Ensure unique key */}
                 <TableCell component="th" scope="row">{row.id}</TableCell>
                 <TableCell align="left" sx={{ color: getStatusColor(row.status) }}>{row.status}</TableCell>
                 <TableCell align="left">{row.date}</TableCell>
                 <TableCell align="left">{row.total}</TableCell>
-                <TableCell align="left" sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{color: '#2DA5F3'}}>View Details</Typography>
-                  <ArrowForwardIcon sx={{ marginLeft: 0.5, color: '#2DA5F3' }} />
+                <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Link to="/orderhistorydetail" style={{ textDecoration: 'none', color: '#2DA5F3' }}>
+                  <Box display="flex" alignItems="center">
+                    <Typography>View Details</Typography>
+                    <ArrowForwardIcon sx={{ marginLeft: 0.5, color: '#2DA5F3' }} />
+                    </Box>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography component="div" align="center">
-        <IconButton onClick={() => setPage(page - 1)} disabled={page === 0} sx={{ borderRadius: '50%' }}>
+      <Typography component="div" align="center" sx={{ mt: 2 }}>
+        <IconButton onClick={handlePrevPage} disabled={page === 0} sx={{ borderRadius: '50%' }}>
           <ArrowBackIosIcon />
         </IconButton>
         {Array.from({ length: Math.ceil(rows.length / rowsPerPage) }, (_, index) => (
@@ -77,8 +85,8 @@ function OrderHistory() {
               margin: '0 4px',
               backgroundColor: 'transparent',
               '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)'
-              }
+                backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              },
             }}
           >
             <span style={{
@@ -89,13 +97,13 @@ function OrderHistory() {
               height: '100%',
               borderRadius: '50%',
               backgroundColor: page === index ? 'primary.main' : 'grey.300',
-              color: 'black'
+              color: 'black',
             }}>
               {index + 1}
             </span>
           </IconButton>
         ))}
-        <IconButton onClick={() => setPage(page + 1)} disabled={page === Math.ceil(rows.length / rowsPerPage) - 1} sx={{ borderRadius: '50%' }}>
+        <IconButton onClick={handleNextPage} disabled={page === Math.ceil(rows.length / rowsPerPage) - 1} sx={{ borderRadius: '50%' }}>
           <ArrowForwardIosIcon />
         </IconButton>
       </Typography>

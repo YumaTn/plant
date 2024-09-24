@@ -1,177 +1,256 @@
-import React from 'react'
-
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
+  CircularProgress,
+  Alert
+} from '@mui/material';
+import HomeBackgroundSay from '../scss/HomeBackgroundSay.png'
 const Home = () => {
-  const headerStyle = {
-    backgroundColor: '#4CAF50',
-    padding: '20px',
-    textAlign: 'center',
-    color: 'white',
-  };
+  const [plants, setPlants] = useState([]);
+  const [bestSellingPlants, setBestSellingPlants] = useState([]);
+  const [trendingPlants, setTrendingPlants] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [celebs, setCelebs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const titleStyle = {
-    fontSize: '3rem',
-    margin: '0',
-    fontWeight: 'bold',
-  };
+  // Fetch data from the API
+  useEffect(() => {
+    const fetchPlants = async () => {
+      try {
+        const response = await fetch('https://66f127da41537919154fc1b0.mockapi.io/plant');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setPlants(data);
 
-  const subtitleStyle = {
-    fontSize: '1.5rem',
-    marginTop: '10px',
-  };
+        // Slice the data to get the first 3 for Best Selling, next 3 for Trending
+        setBestSellingPlants(data.slice(0, 3));
+        setTrendingPlants(data.slice(3, 6));
 
-  const sectionStyle = {
-    padding: '50px 0',
-    textAlign: 'center',
-  };
+        // For Testimonials and Celebs, we'll take the first 3 items
+        setTestimonials(data.slice(0, 3));
+        setCelebs(data.slice(0, 3).map(item => item.celes));
 
-  const productCardStyle = {
-    border: '1px solid #ddd',
-    borderRadius: '10px',
-    padding: '15px',
-    margin: '10px',
-    textAlign: 'center',
-    width: '300px',
-  };
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching plant data:', error);
+        setError(error);
+        setLoading(false);
+      }
+    };
 
-  const cardContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '20px',
-    flexWrap: 'wrap',
-  };
-
-  const buttonStyle = {
-    padding: '10px 20px',
-    backgroundColor: '#ff5722',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  };
-
-  const testimonialCardStyle = {
-    border: '1px solid #ddd',
-    borderRadius: '10px',
-    padding: '15px',
-    margin: '10px',
-    textAlign: 'center',
-    width: '200px',
-  };
-
-  const celebsCardStyle = {
-    width: '150px',
-    margin: '10px',
-  };
-
-  const imageStyle = {
-    width: '100%',
-    borderRadius: '10px',
-  };
+    fetchPlants();
+  }, []);
 
   return (
-    <div>
+    <Box>
       {/* Header Section */}
-      <header style={headerStyle}>
-        <h1 style={titleStyle}>Plan a Plant</h1>
-        <p style={subtitleStyle}>We sell stories - Not sell products</p>
-      </header>
+      <Box sx={{ backgroundColor: '#4CAF50', padding: '20px', textAlign: 'center', color: 'white' }}>
+        <Typography variant="h1" sx={{ fontSize: '3rem', margin: '0', fontWeight: 'bold' }}>
+          Plan a Plant
+        </Typography>
+        <Typography variant="h5" sx={{ fontSize: '1.5rem', marginTop: '10px' }}>
+          We sell stories - Not sell products
+        </Typography>
+      </Box>
 
       {/* Best Selling Products Section */}
-      <section style={sectionStyle}>
-        <h2>Best Selling</h2>
-        <div style={cardContainerStyle}>
-          <div style={productCardStyle}>
-            <img src="indoor-plants.jpg" alt="Indoor Plants" style={imageStyle} />
-            <h3>Indoor Plants</h3>
-            <button style={buttonStyle}>Shop Now</button>
-          </div>
-          <div style={productCardStyle}>
-            <img src="air-purifying-plants.jpg" alt="Air Purifying Plants" style={imageStyle} />
-            <h3>Air Purifying Plants</h3>
-            <button style={buttonStyle}>Shop Now</button>
-          </div>
-          <div style={productCardStyle}>
-            <img src="flowering-plants.jpg" alt="Flowering Plants" style={imageStyle} />
-            <h3>Flowering Plants</h3>
-            <button style={buttonStyle}>Shop Now</button>
-          </div>
-        </div>
-      </section>
+      <Box sx={{ padding: '50px 0', textAlign: 'center' }}>
+        <Typography variant="h2" gutterBottom>
+          Best Selling
+        </Typography>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Alert severity="error">Error: {error.message}</Alert>
+        ) : (
+          <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
+            {bestSellingPlants.map((plant) => (
+              <Grid item key={plant.id}>
+                <Card sx={{ width: 300, borderRadius: '10px', boxShadow: 3 }}>
+                  <CardMedia
+                    component="img"
+                    image={plant.image}
+                    alt={plant.name}
+                    sx={{ height: 200, objectFit: 'cover' }}
+                    loading="lazy"
+                  />
+                  <CardContent sx={{ textAlign: 'center' }}>
+                    <Typography variant="h6" gutterBottom>
+                      {plant.name}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      ${parseFloat(plant.price).toFixed(2)}
+                    </Typography>
+                    <Button variant="contained" color="warning">
+                      Shop Now
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
 
       {/* Trending Plants Section */}
-      <section style={sectionStyle}>
-        <h2>Trending Plants</h2>
-        <div style={cardContainerStyle}>
-          <div style={productCardStyle}>
-            <img src="jade-terrarium.jpg" alt="Jade Terrarium" style={imageStyle} />
-            <h3>Jade Terrarium</h3>
-            <p>$350</p>
-            <button style={buttonStyle}>Buy</button>
-          </div>
-          <div style={productCardStyle}>
-            <img src="ficus-benjamina.jpg" alt="Ficus Benjamina" style={imageStyle} />
-            <h3>Ficus Benjamina</h3>
-            <p>$350</p>
-            <button style={buttonStyle}>Buy</button>
-          </div>
-          <div style={productCardStyle}>
-            <img src="syngonium-plant.jpg" alt="Syngonium Plant" style={imageStyle} />
-            <h3>Syngonium Plant</h3>
-            <p>$350</p>
-            <button style={buttonStyle}>Buy</button>
-          </div>
-        </div>
-      </section>
+      <Box sx={{ padding: '50px 0', textAlign: 'center', backgroundColor: '#f5f5f5' }}>
+        <Typography variant="h2" gutterBottom>
+          Trending Plants
+        </Typography>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Alert severity="error">Error: {error.message}</Alert>
+        ) : (
+          <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
+            {trendingPlants.map((plant) => (
+              <Grid item key={plant.id}>
+                <Card sx={{ width: 300, borderRadius: '10px', boxShadow: 3 }}>
+                  <CardMedia
+                    component="img"
+                    image={plant.image}
+                    alt={plant.name}
+                    sx={{ height: 200, objectFit: 'cover' }}
+                    loading="lazy"
+                  />
+                  <CardContent sx={{ textAlign: 'center' }}>
+                    <Typography variant="h6" gutterBottom>
+                      {plant.name}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      ${parseFloat(plant.price).toFixed(2)}
+                    </Typography>
+                    <Button variant="contained" color="warning"  >
+                      Buy Now
+                    </Button >
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
 
       {/* Personality-based Consultation Section */}
-      <section style={sectionStyle}>
-        <h2>Personality-based Plant Selection Consultation</h2>
-        <p>We provide personalized plant recommendations based on your personality, space, and preferences.</p>
-        <button style={buttonStyle}>Order Now</button>
-      </section>
+      <Box sx={{ padding: '50px 20px', backgroundColor: '#ffffff' }}>
+      <Grid container spacing={4} alignItems="center">
+        {/* Text Section on the Left */}
+        <Grid item xs={12} md={6}>
+          <Typography variant="h2" gutterBottom>
+            Personality-based Plant Selection Consultation
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ marginBottom: '30px', maxWidth: '600px', margin: '0 auto' }}
+          >
+            At Choi Xinh, we take pride in providing personalized plant recommendations that cater to your unique lifestyle and preferences. Our expert horticulturists will carefully consider your personality traits, interests, living space, and schedule to curate a selection of plants that perfectly complement your home and enhance your well-being.
+            <br /><br />
+            *Service only available in Vinhomes Grand Park
+          </Typography>
+          <Button sx={{marginLeft:30,marginTop:10}} variant="contained" color="warning" size="large">
+            Order Now
+          </Button>
+        </Grid>
+
+        {/* Image Section on the Right */}
+        <Grid item xs={12} md={6}>
+          <Box
+            component="img"
+            src={HomeBackgroundSay}// Replace with the image URL
+            alt="Plant consultation"
+            sx={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '10px',
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Box>
 
       {/* Testimonials Section */}
-      <section style={sectionStyle}>
-        <h2>What Our Customers Say</h2>
-        <div style={cardContainerStyle}>
-          <div style={testimonialCardStyle}>
-            <img src="yasuo.jpg" alt="Yasuo" style={imageStyle} />
-            <h4>Yasuo</h4>
-            <p>Lorem ipsum is the best way to go to the point where...</p>
-          </div>
-          <div style={testimonialCardStyle}>
-            <img src="rell.jpg" alt="Rell" style={imageStyle} />
-            <h4>Rell</h4>
-            <p>Lorem ipsum is the best way to go to the point where...</p>
-          </div>
-          <div style={testimonialCardStyle}>
-            <img src="taliyah.jpg" alt="Taliyah" style={imageStyle} />
-            <h4>Taliyah</h4>
-            <p>Lorem ipsum is the best way to go to the point where...</p>
-          </div>
-        </div>
-      </section>
+      <Box sx={{ padding: '50px 0', textAlign: 'center', backgroundColor: '#f5f5f5' }}>
+        <Typography variant="h2" gutterBottom>
+          What Our Customers Say
+        </Typography>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Alert severity="error">Error: {error.message}</Alert>
+        ) : (
+          <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
+            {testimonials.map((testimonial) => (
+              <Grid item key={testimonial.id}>
+                <Card sx={{ width: 250, borderRadius: '10px', boxShadow: 3 }}>
+                  <CardMedia
+                    component="img"
+                    image={testimonial.person}
+                    alt={testimonial.name}
+                    sx={{ height: 200, objectFit: 'cover' }}
+                    loading="lazy"
+                  />
+                  <CardContent sx={{ textAlign: 'center' }}>
+                    <Typography variant="h6" gutterBottom>
+                      {testimonial.name}
+                    </Typography>
+                    <Typography variant="body2">
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua."
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
 
       {/* Celebs You Love Section */}
-      <section style={sectionStyle}>
-        <h2>Celebs You Love, Love Us</h2>
-        <div style={cardContainerStyle}>
-          <div style={celebsCardStyle}>
-            <img src="celeb1.jpg" alt="Celeb 1" style={imageStyle} />
-          </div>
-          <div style={celebsCardStyle}>
-            <img src="celeb2.jpg" alt="Celeb 2" style={imageStyle} />
-          </div>
-          <div style={celebsCardStyle}>
-            <img src="celeb3.jpg" alt="Celeb 3" style={imageStyle} />
-          </div>
-          <div style={celebsCardStyle}>
-            <img src="celeb4.jpg" alt="Celeb 4" style={imageStyle} />
-          </div>
-        </div>
-      </section>
-    </div>
+      <Box sx={{ padding: '50px 0', textAlign: 'center', backgroundColor: '#ffffff' }}>
+        <Typography variant="h2" gutterBottom>
+          Celebs You Love, Love Us
+        </Typography>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+            <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Alert severity="error">Error: {error.message}</Alert>
+        ) : (
+          <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
+            {celebs.map((celebUrl, index) => (
+              <Grid item key={index}>
+                <Card sx={{ width: 150, borderRadius: '10px', boxShadow: 3 }}>
+                  <CardMedia
+                    component="img"
+                    image={celebUrl}
+                    alt={`Celeb ${index + 1}`}
+                    sx={{ height: 150, objectFit: 'cover' }}
+                    loading="lazy"
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
+    </Box>
   );
 };
 
-export default Home
+export default Home;
