@@ -12,9 +12,10 @@ import OrderHistoryDetail from './components/OrderHistory/OrderHistoryDetail';
 import ShopProductBanner from './components/Shop/ShopProductBanner';
 import FilterPlant from './components/Shop/FilterPlant';
 import ShopProduct from './components/Shop/ShopProduct';
-import BlogProductBanner from './components/Blog/BlogBanner';
 import BlogDetail from './components/Blog/BlogDetail';
 import Footer from './components/Footer';
+import SignUp from './components/Login/SignUp';
+import SignIn from './components/Login/SignIn';
 
 const ShopPage = () => {
   return (
@@ -37,12 +38,14 @@ function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />}/>
+          <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/shop" element={<ShopPage />} />
-        <Route path="/blogdetail/:id" element={<BlogDetail />} />
+          <Route path="/blogdetail/:id" element={<BlogDetail />} />
           <Route path="/user"
             element={
               <Box display="flex">
@@ -80,7 +83,7 @@ function App() {
             }
           />
         </Routes>
-        <Footer/>
+        <Footer />
       </Layout>
     </BrowserRouter>
   );
