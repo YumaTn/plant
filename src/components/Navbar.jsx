@@ -11,14 +11,6 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { CartIcon, UserIcon } from '../scss/icon';
 import Products from './Products/Products'
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#F5F5DC' }}>
@@ -47,8 +39,7 @@ function ResponsiveAppBar() {
               <Products/>
               <Button
               component={Link}
-              to="/shop"
-              onClick={handleCloseNavMenu}
+              to="/shop/newproduct"
               sx={{ my: 2, color: 'black', display: 'block',marginLeft:4 }}
             >
               Shop
@@ -56,7 +47,7 @@ function ResponsiveAppBar() {
             <Button
               component={Link}
               to="/blog"
-              onClick={handleCloseNavMenu}
+
               sx={{ my: 2, color: 'black', display: 'block',marginLeft:4 }}
             >
               Blog
@@ -64,7 +55,6 @@ function ResponsiveAppBar() {
             <Button
               component={Link}
               to="/contact"
-              onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'black', display: 'block',marginLeft:4 }}
             >
               Contact
@@ -81,7 +71,7 @@ function ResponsiveAppBar() {
             </IconButton>
               <Typography
               component={Link}
-              to="/user"
+              to="/userlist/user"
               sx={{
                 marginLeft:5,
                 marginRight:5,

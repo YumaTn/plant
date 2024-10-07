@@ -104,7 +104,7 @@ const OrderHistoryDetail = () => {
                     <Link
                     style={{ textDecoration: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%',color:'black',paddingBottom:10 }}
                     components={Link}
-                    to='/orderhistory'
+                    to='/userlist/orderhistory'
                     >
                     <ArrowBackIcon />
                       <Typography variant="h8"  sx={{fontWeight:'bold'}}>
@@ -245,7 +245,7 @@ const OrderHistoryDetail = () => {
                     </Table>
                 </TableContainer>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Box sx={{ mt: 2, padding: 5, padding: 5 }}>
+                    <Box sx={{ mt: 2, padding: 5 }}>
                         <Typography sx={{ fontSize: 20, marginBottom: 2 }}>Billing Address</Typography>
                         <Typography>Nhat Sang</Typography>
                         <Typography sx={{ color: '#77878F' }}>77 Ly Chinh Thang St., Ward 8, Dist. 3</Typography>
@@ -255,7 +255,7 @@ const OrderHistoryDetail = () => {
                         </Box>
                     </Box>
                     <Divider orientation="vertical" flexItem sx={{ marginX: 2 }} />
-                    <Box sx={{ mt: 2, padding: 5, padding: 5 }}>
+                    <Box sx={{ mt: 2, padding: 5 }}>
                         <Typography sx={{ fontSize: 20, marginBottom: 2 }}>Billing Address</Typography>
                         <Typography>Nhat Sang</Typography>
                         <Typography sx={{ color: '#77878F' }}>77 Ly Chinh Thang St., Ward 8, Dist. 3</Typography>
@@ -265,7 +265,7 @@ const OrderHistoryDetail = () => {
                         </Box>
                     </Box>
                     <Divider orientation="vertical" flexItem sx={{ marginX: 2 }} />
-                    <Box sx={{ mt: 2, padding: 5, padding: 5 }}>
+                    <Box sx={{ mt: 2, padding: 5 }}>
                         <Typography sx={{ fontSize: 20, marginBottom: 2 }}>Billing Address</Typography>
                         <Typography>Nhat Sang</Typography>
                         <Typography sx={{ color: '#77878F' }}>77 Ly Chinh Thang St., Ward 8, Dist. 3</Typography>

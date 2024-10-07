@@ -18,7 +18,7 @@ export default function NestedList() {
     >
       <Link 
         component={Link}
-        to="/user"
+        to="/userlist/user"
         style={{ textDecoration: 'none',color:'black' }}
         >
       <ListItemButton>
@@ -30,7 +30,7 @@ export default function NestedList() {
       </Link>
       <Link 
         component={Link}
-        to="/orderhistory"
+        to="/userlist/orderhistory"
         style={{ textDecoration: 'none',color:'black' }}
         >
       <ListItemButton>
