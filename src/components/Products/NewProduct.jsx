@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 import {React,useState,useEffect} from 'react'
-import SearchProduct from '../Shop/SearchProduct';
 import axios from 'axios';
+import SearchProduct from '../Shop/SearchProduct';
 
 const NewProduct = () => {
     const [NewProduct, setNewProduct] = useState([]);
@@ -39,7 +39,7 @@ const NewProduct = () => {
                 <Typography variant="body1" gutterBottom>
                   ${parseFloat(plant.price).toFixed(2)}
                 </Typography>
-                <Button variant="contained" sx={{backgroundColor:"#3B823E"}}>
+                <Button variant="contained" sx={{backgroundColor:"#3B823E",width:'100%'}}>
                   Buy
                 </Button>
               </CardContent>

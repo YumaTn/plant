@@ -29,7 +29,7 @@ const AllBlog = () => {
     <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
       {blogs.map((blog) => (
         <Grid item key={blog.id}>
-          <Link to={`/blogdetail/${blog.id}`} style={{ textDecoration: 'none' }}> {/* Use Link for navigation */}
+          <Link to={`/blogdetail/${blog.id}`} style={{ textDecoration: 'none' }}> 
             <Card sx={{ width: 250, borderRadius: '10px', boxShadow: 3, overflow: 'hidden' }}>
               <CardMedia
                 component="img"

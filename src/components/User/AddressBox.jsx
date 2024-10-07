@@ -11,18 +11,18 @@ export default function FolderList() {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',marginLeft:2,borderRadius:'1px solid black',marginRight:1 }}>
         <nav aria-label="main mailbox folders">
-        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 550,textAlign:'start',padding:1,marginLeft:2 }}>ACCOUNT INFO</Typography>} />
+        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 550,textAlign:'start',padding:1,marginLeft:2 }}>BUILDING ADDRESS</Typography>} />
         </nav>
         <Divider />
       <ListItem sx={{
         
       }}>
-        <Box sx={{ flexGrow: 1,marginLeft:5 }}>
+        <Box sx={{ flexGrow: 1,marginLeft:5,paddingBottom:10 }}>
           <ListItemText
             primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 700 }}>Nhat Sang</Typography>}
           />
           <ListItemText
-            secondary="Thu Duc,Ho Chi Minh"
+            secondary="77 Ly Chinh Thang St., Ward 8, Dist. 3"
           />
           <ListItemText
             secondary="admin123@gmail.com"
@@ -30,14 +30,6 @@ export default function FolderList() {
           <ListItemText
             secondary="+84 1234 56789"
           />
-          <Button
-          sx={{
-            border:1,
-            marginTop:2
-          }}
-          >
-            EDIT ACCOUNT
-          </Button>
         </Box>
       </ListItem>
     </List>

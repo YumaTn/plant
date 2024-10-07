@@ -21,6 +21,8 @@ import BestSelling from './components/Products/BestSelling';
 import NewProduct from './components/Products/NewProduct';
 import Shop from './components/Shop/Shop';
 import UserContainer from './components/User/UserContainer';
+import Profile from './components/User/Profile';
+import FAQ from './components/FAQ/FAQ';
 
 function App() {
   return (
@@ -33,11 +35,11 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
-
+          <Route path="/blogdetail/:id" element={<BlogDetail />} />
           <Route path="/shop" element={<Shop />}>
             <Route path="newproduct" element={<NewProduct />} />
-            <Route path="bonsai" element={<Bonsai />} />
-            <Route path="cactus" element={<Cactus />} />
+            <Route path="bonsai" element={<Bonsai/>} />
+            <Route path="cactus" element={<Cactus/>} />
             <Route path="creepers" element={<Creepers />} />
             <Route path="succulents" element={<Succulents />} />
             <Route path="seeds" element={<Seeds />} />
@@ -45,10 +47,11 @@ function App() {
             <Route path="bestselling" element={<BestSelling />} />
           </Route>
           <Route path='/userlist' element={<UserContainer/>}>
-          <Route path="blogdetail/:id" element={<BlogDetail />} />
           <Route path="user" element={<User />}/>
           <Route path="orderhistory" element={<OrderHistory />}/>
           <Route path="orderhistorydetail" element={<OrderHistoryDetail />}/>
+          <Route path="profile" element={<Profile/>}/>
+          <Route path="FAQ" element={<FAQ/>}/>
           </Route>
           <Route path="/newproduct" element={<NewProduct />} />
             <Route path="/bonsai" element={<Bonsai />} />

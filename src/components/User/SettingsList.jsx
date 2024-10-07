@@ -12,7 +12,7 @@ export default function NestedList() {
 
   return (
     <List
-      sx={{ width: '264px',height:'312px', maxWidth: 360, bgcolor: 'background.paper',borderRadius:1,marginLeft:'60px',top:'109px' }}
+      sx={{ width: '264px',height:'312px', maxWidth: 360, bgcolor: 'background.paper',borderRadius:1,marginLeft:'60px',top:'109px',marginBottom:50 }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
@@ -52,12 +52,18 @@ export default function NestedList() {
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}> Cards & Address</Typography>}/>
       </ListItemButton>
+      <Link 
+        component={Link}
+        to="/userlist/FAQ"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
       <ListItemButton>
         <ListItemIcon>
         <SettingsListIcon/>
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>FAQ</Typography>}/>
       </ListItemButton>
+      </Link>
       <ListItemButton>
         <ListItemIcon>
         <SettingsListIcon/>

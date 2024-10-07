@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Card, CardMedia, CardContent, Typography, Box, Button } from '@mui/material';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import {React,useState,useEffect} from 'react'
 import axios from 'axios';
+import SearchProduct from '../Shop/SearchProduct';
 
 const Bonsai = () => {
-  const [bonsai, setBonsai] = useState([]);
-
-  useEffect(() => {
-    const fetchBonsai = async () => {
-      try {
-        const response = await axios.get('https://66f127da41537919154fc1b0.mockapi.io/plant');
-        setBonsai(response.data);
-      } catch (error) {
-        console.error("Error fetching the bonsai data:", error);
-      }
-    };
-
-    fetchBonsai();
-  }, []);
-
+    const [Bonsai, setBonsai] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    useEffect(() => {
+        const fetchPlants = async () => {
+          try {
+            const response = await axios.get('https://66f127da41537919154fc1b0.mockapi.io/plant');
+            setBonsai(response.data);
+          } catch (error) {
+            console.error("Error fetching the plants data:", error);
+          }
+        };
+    
+        fetchPlants();
+      }, []);
   return (
-    <Box>
-    <Typography
-    sx={{
-        fontFamily:"Unna",
-        textAlign:'center',
-        fontSize:40,
-        fontWeight:'bold',
-        marginTop:5,
-    }}
-    >Bonsai</Typography>
-      <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
-        {bonsai.map((plant) => (
+    <>
+    <SearchProduct searchTem={searchTerm} setSearchTerm={setSearchTerm}/>
+    <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
+        {Bonsai.map((plant) => (
           <Grid item key={plant.id}>
             <Card sx={{ width: 300, borderRadius: '10px', boxShadow: 3 }}>
               <CardMedia
@@ -48,16 +39,16 @@ const Bonsai = () => {
                 <Typography variant="body1" gutterBottom>
                   ${parseFloat(plant.price).toFixed(2)}
                 </Typography>
-                <Button variant="contained" sx={{backgroundColor:"#3B823E"}}>
-                  Shop Now
+                <Button variant="contained" sx={{backgroundColor:"#3B823E",width:'100%'}}>
+                  Buy
                 </Button>
               </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
-    </Box>
-  );
+      </>
+  )
 }
 
-export default Bonsai;
+export default Bonsai

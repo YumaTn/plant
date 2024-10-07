@@ -6,6 +6,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import { Box, Button, Divider, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function FolderList() {
   return (
@@ -33,6 +34,10 @@ export default function FolderList() {
           <ListItemText
             secondary="+84 1234 56789"
           />
+          <Link
+          component={Link}
+          to="/userlist/profile"
+          >
           <Button
           sx={{
             border:1,
@@ -41,6 +46,7 @@ export default function FolderList() {
           >
             EDIT ACCOUNT
           </Button>
+          </Link>
         </Box>
       </ListItem>
     </List>

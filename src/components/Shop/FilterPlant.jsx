@@ -39,15 +39,29 @@ export default function FilterPlant() {
           </ListItemButton>
           {openIndoor && (
             <List component="div" disablePadding>
-              {['Maidenhair Fern', 'Kentia Palm', 'Snake Plant', 'Others'].map((plant) => (
-                <ListItemButton key={plant} sx={{ pl: 8 }}>
-                  <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>{plant}</Typography>} />
-                </ListItemButton>
-              ))}
+            <Link to="/shop/bonsai" style={{ textDecoration: 'none', color: 'inherit' }}>
               <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', color: 'black',fontWeight:'bold' }}>Show more</Typography>} />
+                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Bonsai</Typography>} />
               </ListItemButton>
-            </List>
+            </Link>
+
+            <Link to="/shop/cactus" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemButton sx={{ pl: 8 }}>
+              <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Cactus</Typography>} />
+            </ListItemButton>
+            </Link>
+            <Link to="/shop/succulents" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemButton sx={{ pl: 8 }}>
+              <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Succulents</Typography>} />
+            </ListItemButton>
+            </Link>
+            <ListItemButton sx={{ pl: 8 }}>
+              <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Others</Typography>} />
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 8 }}>
+              <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', color: 'black', fontWeight: 'bold' }}>Show more</Typography>} />
+            </ListItemButton>
+          </List>
           )}
 
           {/* Outdoor Plants */}
@@ -60,9 +74,11 @@ export default function FilterPlant() {
           {openOutdoor && (
             <List component="div" disablePadding>
               {/* Add outdoor plant items here */}
+              <Link to="/shop/seeds" style={{ textDecoration: 'none', color: 'inherit' }}>
               <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Example Outdoor Plant 1</Typography>} />
+                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Seeds</Typography>} />
               </ListItemButton>
+              </Link>
               <ListItemButton sx={{ pl: 8 }}>
                 <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Example Outdoor Plant 2</Typography>} />
               </ListItemButton>

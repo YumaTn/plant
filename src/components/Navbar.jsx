@@ -10,31 +10,21 @@ import Button from '@mui/material/Button';
 import AdbIcon from '@mui/icons-material/Adb';
 import { CartIcon, UserIcon } from '../scss/icon';
 import Products from './Products/Products'
+import Logo from '../scss/Logo.png'
+import { Image } from '@mui/icons-material';
 function ResponsiveAppBar() {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#F5F5DC' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1,color:'black' }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
+        <Link
+        component={Link}
             to="/"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+        >
+          <img src={Logo} alt="Logo" style={{ width: '50px', height: 'auto', marginRight: '16px' }} />
+        </Link>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },justifyContent:'space-evenly' }}>
               <Products/>
               <Button
