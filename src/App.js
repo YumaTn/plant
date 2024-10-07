@@ -21,6 +21,7 @@ import BestSelling from './components/Products/BestSelling';
 import NewProduct from './components/Products/NewProduct';
 import Shop from './components/Shop/Shop';
 import UserContainer from './components/User/UserContainer';
+import ProductDetail from './components/Products/ProductDetail';
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
 
+          <Route path="blogdetail/:id" element={<BlogDetail />} />
+          <Route path="/productdetail/:id" element={<ProductDetail />} />
+
           <Route path="/shop" element={<Shop />}>
             <Route path="newproduct" element={<NewProduct />} />
             <Route path="bonsai" element={<Bonsai />} />
@@ -44,20 +48,20 @@ function App() {
             <Route path="decorateItem" element={<DecorateItem />} />
             <Route path="bestselling" element={<BestSelling />} />
           </Route>
-          <Route path='/userlist' element={<UserContainer/>}>
-          <Route path="blogdetail/:id" element={<BlogDetail />} />
-          <Route path="user" element={<User />}/>
-          <Route path="orderhistory" element={<OrderHistory />}/>
-          <Route path="orderhistorydetail" element={<OrderHistoryDetail />}/>
+          <Route path='/userlist' element={<UserContainer />}>
+
+            <Route path="user" element={<User />} />
+            <Route path="orderhistory" element={<OrderHistory />} />
+            <Route path="orderhistorydetail" element={<OrderHistoryDetail />} />
           </Route>
           <Route path="/newproduct" element={<NewProduct />} />
-            <Route path="/bonsai" element={<Bonsai />} />
-            <Route path="/cactus" element={<Cactus />} />
-            <Route path="/creepers" element={<Creepers />} />
-            <Route path="/succulents" element={<Succulents />} />
-            <Route path="/seeds" element={<Seeds />} />
-            <Route path="/decorateItem" element={<DecorateItem />} />
-            <Route path="/bestselling" element={<BestSelling />} />
+          <Route path="/bonsai" element={<Bonsai />} />
+          <Route path="/cactus" element={<Cactus />} />
+          <Route path="/creepers" element={<Creepers />} />
+          <Route path="/succulents" element={<Succulents />} />
+          <Route path="/seeds" element={<Seeds />} />
+          <Route path="/decorateItem" element={<DecorateItem />} />
+          <Route path="/bestselling" element={<BestSelling />} />
         </Routes>
         <Footer />
       </Layout>
