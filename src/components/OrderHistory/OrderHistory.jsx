@@ -58,7 +58,7 @@ function OrderHistory() {
                 <TableCell align="left">{row.date}</TableCell>
                 <TableCell align="left">{row.total}</TableCell>
                 <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Link to="/orderhistorydetail" style={{ textDecoration: 'none', color: '#2DA5F3' }}>
+                  <Link to="/userlist/orderhistorydetail" style={{ textDecoration: 'none', color: '#2DA5F3' }}>
                   <Box display="flex" alignItems="center">
                     <Typography>View Details</Typography>
                     <ArrowForwardIcon sx={{ marginLeft: 0.5, color: '#2DA5F3' }} />

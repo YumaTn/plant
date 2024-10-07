@@ -11,6 +11,10 @@ import {
   Alert
 } from '@mui/material';
 import HomeBackgroundSay from '../scss/HomeBackgroundSay.png'
+import HomeBanner from './HomeBanner';
+import HomeBannerUnder from './HomeBannerUnder';
+import CategoryHome from './CategoryHome';
+import { Link } from 'react-router-dom';
 const Home = () => {
   const [plants, setPlants] = useState([]);
   const [bestSellingPlants, setBestSellingPlants] = useState([]);
@@ -52,18 +56,22 @@ const Home = () => {
 
   return (
     <Box>
-      {/* Header Section */}
-      <Box sx={{ backgroundColor: '#4CAF50', padding: '20px', textAlign: 'center', color: 'white' }}>
-        <Typography variant="h1" sx={{ fontSize: '3rem', margin: '0', fontWeight: 'bold' }}>
-          Plan a Plant
-        </Typography>
-        <Typography variant="h5" sx={{ fontSize: '1.5rem', marginTop: '10px' }}>
-          We sell stories - Not sell products
-        </Typography>
-      </Box>
-
-      {/* Best Selling Products Section */}
-      <Box sx={{ padding: '50px 0', textAlign: 'center' }}>
+      <HomeBanner/>
+      <Typography
+      sx={{
+        textAlign:'center',
+        fontSize:50,
+        marginTop:5,
+        marginBottom:5,
+        fontFamily:'unna',
+        fontWeight:'bold'
+      }}
+      >
+      We sell stories - Not sell products
+      </Typography>
+      <HomeBannerUnder/>
+      <CategoryHome/>
+      <Box sx={{ textAlign: 'center' }}>
         <Typography variant="h2" gutterBottom>
           Best Selling
         </Typography>
@@ -92,7 +100,12 @@ const Home = () => {
                     <Typography variant="body1" gutterBottom>
                       ${parseFloat(plant.price).toFixed(2)}
                     </Typography>
-                    <Button variant="contained" color="warning">
+                    <Button 
+                    sx={{
+                      backgroundColor:'green',
+                      color:'white'
+                    }}
+                    >
                       Shop Now
                     </Button>
                   </CardContent>
@@ -133,7 +146,12 @@ const Home = () => {
                     <Typography variant="body1" gutterBottom>
                       ${parseFloat(plant.price).toFixed(2)}
                     </Typography>
-                    <Button variant="contained" color="warning"  >
+                    <Button 
+                    sx={{
+                      backgroundColor:'green',
+                      color:'white'
+                    }}
+                    >
                       Buy Now
                     </Button >
                   </CardContent>
@@ -158,9 +176,11 @@ const Home = () => {
           >
             At Choi Xinh, we take pride in providing personalized plant recommendations that cater to your unique lifestyle and preferences. Our expert horticulturists will carefully consider your personality traits, interests, living space, and schedule to curate a selection of plants that perfectly complement your home and enhance your well-being.
             <br /><br />
+            <Typography sx={{color:'red'}}>
             *Service only available in Vinhomes Grand Park
+            </Typography>
           </Typography>
-          <Button sx={{marginLeft:30,marginTop:10}} variant="contained" color="warning" size="large">
+          <Button sx={{marginLeft:30,marginTop:10,backgroundColor:'green',color:'white'}} variant="contained" size="large">
             Order Now
           </Button>
         </Grid>

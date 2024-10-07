@@ -41,7 +41,7 @@ export default function HistoryOrderPre() {
         }}
       >
         <Typography sx={{ fontWeight: 500, padding: 1 }}>RECENT ORDER</Typography>
-        <Link to="/orderhistory" style={{ textDecoration: 'none' }}>
+        <Link to="/userlist/orderhistory" style={{ textDecoration: 'none' }}>
           <Box display="flex" alignItems="center">
             <Typography variant="body2" color="#FA8232" sx={{ textDecoration: 'none' }}>
               View All
@@ -52,7 +52,6 @@ export default function HistoryOrderPre() {
       </Box>
 
       <TableContainer>
-        {/* Table Content */}
         <Table
           sx={{
             minWidth: 650,
@@ -60,6 +59,7 @@ export default function HistoryOrderPre() {
             borderColor: '#E4E7E9',
             width: 1040,
             backgroundColor: '#F2F4F5',
+            marginRight:10.5
           }}
           aria-label="simple table"
         >
@@ -80,7 +80,7 @@ export default function HistoryOrderPre() {
                 <TableCell align="right">{row.fat}</TableCell>
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">
-                  <Link to="#" style={{ textDecoration: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+                  <Link to="/userlist/orderhistorydetail" style={{ textDecoration: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
                     <Box display="flex" alignItems="center">
                       <Typography sx={{ color: '#FA8232', textDecoration: 'none' }}>
                         View All

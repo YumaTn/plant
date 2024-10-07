@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Link } from 'react-router-dom';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -95,37 +96,85 @@ export default function CustomizedMenus() {
         id="demo-customized-menu"
         MenuListProps={{
           'aria-labelledby': 'demo-customized-button',
-          onMouseLeave: handleCloseMenu, // Đóng menu khi chuột rời khỏi menu
+          onMouseLeave: handleCloseMenu, 
         }}
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
+        <Link 
+        component={Link}
+        to="/newproduct"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           New Product
         </MenuItem>
+        </Link>
+        <Link 
+        component={Link}
+        to="/bestselling"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Best Selling
         </MenuItem>
+        </Link>
         <Divider sx={{ my: 0.5 }} />
+        <Link 
+        component={Link}
+        to="/bonsai"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Bonsai
         </MenuItem>
+        </Link>
+        <Link 
+        component={Link}
+        to="/succulents"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Succulent
         </MenuItem>
+        </Link>
+        <Link 
+        component={Link}
+        to="/cactus"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Cactus
         </MenuItem>
+        </Link>
+        <Link 
+        component={Link}
+        to="/seeds"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Seeds
         </MenuItem>
+        </Link>
+        <Link 
+        component={Link}
+        to="/creepers"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Creepers
         </MenuItem>
+        </Link>
+        <Link 
+        component={Link}
+        to="/decorateItem"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
         <MenuItem disableRipple onClick={handleCloseMenu}>
           Decoration items
         </MenuItem>
+        </Link>
       </StyledMenu>
     </div>
   );

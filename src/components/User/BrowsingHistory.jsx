@@ -62,7 +62,7 @@ export default function BrowsingHistory() {
         <Typography sx={{ fontWeight: 500, padding: 1 }}>
           BROWSING HISTORY
         </Typography>
-        <Link to="/orderhistory" style={{ textDecoration: 'none' }}>
+        <Link to="/userlist/orderhistory" style={{ textDecoration: 'none' }}>
           <Typography variant="body2" color="#FA8232">
             View All{' '}
             <ArrowForwardIcon
