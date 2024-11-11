@@ -7,34 +7,23 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import AdbIcon from '@mui/icons-material/Adb';
 import { CartIcon, UserIcon } from '../scss/icon';
 import Products from './Products/Products'
-function ResponsiveAppBar() {
+import Logo from '../scss/Logo.png'
+
+const Navbar = () => {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#F5F5DC' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1,color:'black' }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
+        <Link
+        component={Link}
             to="/"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+        >
+          <img src={Logo} alt="Logo" style={{ width: '50px', height: 'auto', marginRight: '16px' }} />
+        </Link>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },justifyContent:'space-evenly' }}>
               <Products/>
               <Button
@@ -52,13 +41,6 @@ function ResponsiveAppBar() {
             >
               Blog
             </Button>
-            <Button
-              component={Link}
-              to="/contact"
-              sx={{ my: 2, color: 'black', display: 'block',marginLeft:4 }}
-            >
-              Contact
-            </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <IconButton>
@@ -71,7 +53,7 @@ function ResponsiveAppBar() {
             </IconButton>
               <Typography
               component={Link}
-              to="/userlist/user"
+              to="/signin"
               sx={{
                 marginLeft:5,
                 marginRight:5,
@@ -88,4 +70,4 @@ function ResponsiveAppBar() {
   );
 }
 
-export default ResponsiveAppBar;
+export default Navbar;

@@ -41,7 +41,7 @@ const NewProduct = () => {
                   <Typography variant="body1" gutterBottom>
                     ${parseFloat(plant.price).toFixed(2)}
                   </Typography>
-                  <Button variant="contained" sx={{ backgroundColor: "#3B823E" }}>
+                  <Button variant="contained" sx={{ backgroundColor: "#3B823E",width:'100%' }}>
                     Buy
                   </Button>
                 </CardContent>

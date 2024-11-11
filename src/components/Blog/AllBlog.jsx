@@ -9,12 +9,20 @@ const AllBlog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get('https://66f127da41537919154fc1b0.mockapi.io/plant');
-        const mappedBlogs = response.data.map(item => ({
+        const response = await axios.post('https://exe201be.io.vn/api/blogs/search', {
+          pageNum: 1,
+          pageSize: 10,
+          title: "",
+          status: true
+        });
+        const mappedBlogs = response.data.data.pageData.map(item => ({
           id: item.id,
-          person: item.image,
-          name: item.name,
-          date: "May 23 2023" // Add your date logic here if needed
+          userName: item.userName,
+          urlAvatar: item.urlAvatar,
+          title: item.title,
+          description: item.description,
+          date: new Date(item.date).toLocaleDateString('vi-VN'), // Convert date to locale format
+          urlImg1: item.urlImg1
         }));
         setBlogs(mappedBlogs);
       } catch (error) {
@@ -29,12 +37,12 @@ const AllBlog = () => {
     <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
       {blogs.map((blog) => (
         <Grid item key={blog.id}>
-          <Link to={`/blogdetail/${blog.id}`} style={{ textDecoration: 'none' }}> {/* Use Link for navigation */}
+          <Link to={`/blogdetail/${blog.id}`} style={{ textDecoration: 'none' }}>
             <Card sx={{ width: 250, borderRadius: '10px', boxShadow: 3, overflow: 'hidden' }}>
               <CardMedia
                 component="img"
-                image={blog.person}
-                alt={blog.name}
+                image={blog.urlImg1}
+                alt={blog.title}
                 sx={{ height: 200, objectFit: 'cover' }}
                 loading="lazy"
               />
@@ -49,7 +57,7 @@ const AllBlog = () => {
                     maxWidth: '100%' 
                   }}
                 >
-                  {blog.name}
+                  {blog.title}
                 </Typography>
                 <Typography 
                   variant="body2" 
@@ -63,14 +71,13 @@ const AllBlog = () => {
                     lineClamp: 2,
                   }}
                 >
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua."
+                  {blog.description}
                 </Typography>
 
                 <Box display="flex" alignItems="center" justifyContent="center" sx={{ marginTop: 1 }}>
                   <Avatar 
-                    alt={blog.name} 
-                    src={blog.person} 
+                    alt={blog.userName} 
+                    src={blog.urlAvatar} 
                     sx={{ width: 30, height: 30, marginRight: 1 }} 
                   />
                   <Typography 
@@ -83,7 +90,7 @@ const AllBlog = () => {
                       maxWidth: '100%' 
                     }}
                   >
-                    {blog.name}
+                    {blog.userName}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {blog.date}
@@ -96,6 +103,6 @@ const AllBlog = () => {
       ))}
     </Grid>
   );
-}
+};
 
 export default AllBlog;

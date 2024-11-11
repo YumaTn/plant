@@ -9,6 +9,7 @@ import AL_1 from '../../scss/AL_1.png';
 import AL_2 from '../../scss/AL_2.png';
 import AL_3 from '../../scss/AL_3.png';
 import AL_4 from '../../scss/AL_4.png';
+import { Link } from 'react-router-dom';
 
 const ProductDetail = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -115,6 +116,10 @@ const ProductDetail = () => {
                                 fullWidth
                                 style={{ marginBottom: '20px' }}
                             />
+                            <Link
+                            components={Link}
+                            to="/cart"
+                            >
                             <Button
                                 variant="contained"
                                 fullWidth
@@ -122,6 +127,7 @@ const ProductDetail = () => {
                             >
                                 Add to Cart
                             </Button>
+                            </Link>
                         </Box>
                     </Grid>
                 </Grid>

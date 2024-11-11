@@ -11,7 +11,7 @@ const Dashboard = () => {
   return (
     <>
         <NameAndNote/>
-        <Box display='flex'>
+        <Box display='flex' >
         <AccInfBox/>
         <AddressBox/>
         <AllOrdersStatus/>

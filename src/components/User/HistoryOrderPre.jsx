@@ -33,11 +33,11 @@ export default function HistoryOrderPre() {
           border: 1,
           padding: 1,
           marginTop: 4,
+          width:'91%',
           borderColor: '#E4E7E9',
           backgroundColor: 'white',
           borderTopleftRadius: 4,
           borderTopLeftRadius: 4,
-          marginRight: 10.5,
         }}
       >
         <Typography sx={{ fontWeight: 500, padding: 1 }}>RECENT ORDER</Typography>
@@ -57,7 +57,7 @@ export default function HistoryOrderPre() {
             minWidth: 650,
             border: 1,
             borderColor: '#E4E7E9',
-            width: 1040,
+            width: "91%",
             backgroundColor: '#F2F4F5',
             marginRight:10.5
           }}

@@ -1,19 +1,41 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { SettingsListIcon } from '../../scss/icon'; // Make sure this path is correct
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 export default function FilterPlant() {
-  const [openAllCategories, setOpenAllCategories] = React.useState(false);
-  const [openIndoor, setOpenIndoor] = React.useState(false);
-  const [openOutdoor, setOpenOutdoor] = React.useState(false);
-  const [openMedicinal, setOpenMedicinal] = React.useState(false);
+  const [ecologicalData, setEcologicalData] = useState([]);
+  const [openCategories, setOpenCategories] = useState({});
+
+  // Gọi API với body request và cập nhật dữ liệu vào ecologicalData
+  useEffect(() => {
+    axios.post('https://exe201be.io.vn/api/ecologicalcharacterictic/search', {
+      pageNum: 1,
+      pageSize: 10,
+      name: "",
+      status: true
+    })
+      .then(response => {
+        if (response.data.success) {
+          setEcologicalData(response.data.data.pageData);
+        }
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
+
+  // Hàm toggle mở/đóng danh mục
+  const handleToggleCategory = (id) => {
+    setOpenCategories(prevState => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
 
   return (
     <List
@@ -22,72 +44,35 @@ export default function FilterPlant() {
       aria-labelledby="nested-list-subheader"
     >
       {/* All Categories */}
-      <ListItemButton onClick={() => setOpenAllCategories(!openAllCategories)}>
+      <ListItemButton>
         <ListItemIcon>
-          {openAllCategories ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>All Categories</Typography>} />
       </ListItemButton>
-      {openAllCategories && (
-        <List component="div" disablePadding>
-          {/* Indoor Plants */}
-          <ListItemButton onClick={() => setOpenIndoor(!openIndoor)} sx={{ pl: 4 }}>
+
+      {/* Hiển thị các danh mục từ API */}
+      {ecologicalData.map((category) => (
+        <React.Fragment key={category.id}>
+          <ListItemButton onClick={() => handleToggleCategory(category.id)} sx={{ pl: 4 }}>
             <ListItemIcon>
-              {openIndoor ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
+              {openCategories[category.id] ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Indoor Plants</Typography>} />
+            <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>{`${category.name} (${category.desciption})`}</Typography>} />
           </ListItemButton>
-          {openIndoor && (
+          
+          {openCategories[category.id] && (
             <List component="div" disablePadding>
-              {['Maidenhair Fern', 'Kentia Palm', 'Snake Plant', 'Others'].map((plant) => (
-                <ListItemButton key={plant} sx={{ pl: 8 }}>
-                  <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>{plant}</Typography>} />
-                </ListItemButton>
+              {category.listCategory.map((subCategory) => (
+                <Link to={`/shop/${subCategory.name}`} key={subCategory.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <ListItemButton sx={{ pl: 8 }}>
+                    <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>{`${subCategory.name} (${subCategory.description})`}</Typography>} />
+                  </ListItemButton>
+                </Link>
               ))}
-              <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', color: 'black',fontWeight:'bold' }}>Show more</Typography>} />
-              </ListItemButton>
             </List>
           )}
-
-          {/* Outdoor Plants */}
-          <ListItemButton onClick={() => setOpenOutdoor(!openOutdoor)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              {openOutdoor ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Outdoor Plants</Typography>} />
-          </ListItemButton>
-          {openOutdoor && (
-            <List component="div" disablePadding>
-              {/* Add outdoor plant items here */}
-              <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Example Outdoor Plant 1</Typography>} />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Example Outdoor Plant 2</Typography>} />
-              </ListItemButton>
-            </List>
-          )}
-
-          {/* Medicinal Plants */}
-          <ListItemButton onClick={() => setOpenMedicinal(!openMedicinal)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              {openMedicinal ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Medicinal Plants</Typography>} />
-          </ListItemButton>
-          {openMedicinal && (
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Example Medicinal Plant 1</Typography>} />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 8 }}>
-                <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Example Medicinal Plant 2</Typography>} />
-              </ListItemButton>
-            </List>
-          )}
-        </List>
-      )}
+        </React.Fragment>
+      ))}
     </List>
   );
 }
