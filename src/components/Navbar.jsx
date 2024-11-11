@@ -7,12 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import AdbIcon from '@mui/icons-material/Adb';
 import { CartIcon, UserIcon } from '../scss/icon';
 import Products from './Products/Products'
 import Logo from '../scss/Logo.png'
-import { Image } from '@mui/icons-material';
-function ResponsiveAppBar() {
+
+const Navbar = () => {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: '#F5F5DC' }}>
@@ -42,13 +41,6 @@ function ResponsiveAppBar() {
             >
               Blog
             </Button>
-            <Button
-              component={Link}
-              to="/contact"
-              sx={{ my: 2, color: 'black', display: 'block',marginLeft:4 }}
-            >
-              Contact
-            </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <IconButton>
@@ -61,7 +53,7 @@ function ResponsiveAppBar() {
             </IconButton>
               <Typography
               component={Link}
-              to="/userlist/user"
+              to="/signin"
               sx={{
                 marginLeft:5,
                 marginRight:5,
@@ -78,4 +70,4 @@ function ResponsiveAppBar() {
   );
 }
 
-export default ResponsiveAppBar;
+export default Navbar;

@@ -35,11 +35,9 @@ const Home = () => {
         const data = await response.json();
         setPlants(data);
 
-        // Slice the data to get the first 3 for Best Selling, next 3 for Trending
         setBestSellingPlants(data.slice(0, 3));
         setTrendingPlants(data.slice(3, 6));
 
-        // For Testimonials and Celebs, we'll take the first 3 items
         setTestimonials(data.slice(0, 3));
         setCelebs(data.slice(0, 3).map(item => item.celes));
 
@@ -180,16 +178,20 @@ const Home = () => {
             *Service only available in Vinhomes Grand Park
             </Typography>
           </Typography>
+          <Link
+          to='/shop'
+          component={Link}
+          >
           <Button sx={{marginLeft:30,marginTop:10,backgroundColor:'green',color:'white'}} variant="contained" size="large">
             Order Now
           </Button>
+          </Link>
         </Grid>
 
-        {/* Image Section on the Right */}
         <Grid item xs={12} md={6}>
           <Box
             component="img"
-            src={HomeBackgroundSay}// Replace with the image URL
+            src={HomeBackgroundSay}
             alt="Plant consultation"
             sx={{
               width: '100%',

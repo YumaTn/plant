@@ -94,7 +94,12 @@ const Cart = () => {
               <Typography variant="body1">Discount: $24</Typography>
               <Typography variant="body1">Tax: $61.99</Typography>
               <Typography variant="h6" sx={{ marginTop: 2 }}>Total: $357.99 USD</Typography>
+              <Link
+              to='/payment'
+              components={Link}
+              >
               <Button variant="contained" sx={{ marginTop: 2,backgroundColor:'green',width:'100%' }}>Proceed to Checkout</Button>
+              </Link>
             </Paper>
           </Grid>
           <Grid item xs={12}>

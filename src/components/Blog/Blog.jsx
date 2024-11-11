@@ -1,6 +1,6 @@
 import React from 'react'
-import AllBlog from './Blog/AllBlog'
-import BlogProductBanner from './Blog/BlogBanner'
+import AllBlog from './AllBlog'
+import BlogProductBanner from './BlogBanner'
 
 const Blog = () => {
   return (

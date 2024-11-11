@@ -64,18 +64,30 @@ export default function NestedList() {
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>FAQ</Typography>}/>
       </ListItemButton>
       </Link>
+      <Link 
+        component={Link}
+        to="/userlist/profile"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
       <ListItemButton>
         <ListItemIcon>
         <SettingsListIcon/>
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Setting</Typography>}/>
       </ListItemButton>
+      </Link>
+      <Link 
+        component={Link}
+        to="/signin"
+        style={{ textDecoration: 'none',color:'black' }}
+        >
       <ListItemButton>
         <ListItemIcon>
         <SettingsListIcon/>
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Logout</Typography>}/>
       </ListItemButton>
+      </Link>
     </List>
   );
 }

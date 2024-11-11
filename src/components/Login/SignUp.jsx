@@ -1,45 +1,49 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Checkbox, Typography, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, TextField, Checkbox, Typography, Grid, FormControlLabel } from '@mui/material';
+import { ImageSignUpIcon, LoginIcon } from '../../scss/icon';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const SignUp = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
+    const [account, setaccount] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const [successMessage, setSuccessMessage] = useState(''); 
+    const [showPassword, setShowPassword] = useState(false); 
 
     const handleSignUp = async () => {
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-
+        const userName = `${firstName} ${lastName}`;
         try {
-            const response = await fetch('https://66f96f9fafc569e13a98c7b5.mockapi.io/Sign', { 
-                method: 'POST',
+            const response = await axios.post('https://exe201be.io.vn/api/user', {
+                userName,
+                account,
+                password,
+                confirmPassword,
+                address:'',
+                phoneNumber:'',
+                gender:''
+
+            }, {
                 headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                }),
+                    'Content-Type': 'application/json' 
+                }
             });
 
-            if (response.ok) {
-                alert('Sign up successful! Please log in.');
-                navigate('/signin');
-            } else {
-                const data = await response.json();
-                setError(data.message || 'Sign up failed');
-            }
+            console.log(response.data);
+            setSuccessMessage('Đăng ký thành công!');
+            setError(''); 
+            setFirstName('');
+            setLastName('');
+            setaccount('');
+            setPassword('');
+            setConfirmPassword('');
         } catch (error) {
-            setError('Failed to sign up');
+            setError('Có lỗi xảy ra. Vui lòng thử lại!'); 
+            setSuccessMessage('');
+            console.error('Error signing up:', error);
         }
     };
 
@@ -53,76 +57,119 @@ const SignUp = () => {
         >
             <Box
                 p={4}
+                marginTop={5}
                 borderRadius={4}
-                boxShadow={3}
-                maxWidth={400}
-                bgcolor="white"
+                border={1}
+                borderColor="#CCCCCC"
+                maxWidth={1000}  
+                width="100%"
             >
-                <Typography variant="h5" fontWeight="bold" gutterBottom>
+                <LoginIcon />
+                <Typography variant="h5" fontWeight="bold" marginBottom={2}>
                     Create an account
                 </Typography>
                 {error && <Typography color="error">{error}</Typography>}
-                <TextField
-                    label="First name"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-                <TextField
-                    label="Last name"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-                <TextField
-                    label="Email address"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                    label="Password"
-                    type="password"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <TextField
-                    label="Confirm your password"
-                    type="password"
-                    fullWidth
-                    variant="outlined"
-                    margin="normal"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <Box display="flex" alignItems="center">
-                        <Checkbox />
-                        <Typography>Show password</Typography>
-                    </Box>
+                {successMessage && <Typography color="success.main">{successMessage}</Typography>}
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={8}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    label="First name"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    label="Last name"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <TextField
+                            label="Email address"
+                            fullWidth
+                            variant="outlined"
+                            margin="normal"
+                            value={account}
+                            onChange={(e) => setaccount(e.target.value)}
+                        />
+
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    label="Password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    label="Confirm your password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={4} display="flex" justifyContent="center" alignItems="center">
+                        <ImageSignUpIcon style={{ width: '100%', height: 'auto' }} />
+                    </Grid>
+                </Grid>
+
+                <Box display="flex" alignItems="center" justifyContent="space-between" marginTop={-10}>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)} 
+                            />
+                        }
+                        label="Show password"
+                    />
                 </Box>
-                <Button
-                    variant="contained"
-                    color="success"
+                
+                <Box
                     fullWidth
                     size="large"
-                    sx={{ mt: 2 }}
+                    sx={{
+                     mt: 2,
+                     border: '1px solid #A5F6BC',
+                     backgroundColor: '#A5F6BC',
+                     color: 'black',
+                     fontWeight: 'bold',
+                     cursor: 'pointer',
+                     textAlign: 'center',
+                     borderRadius: 20,
+                     padding: 2,
+                    }}
                     onClick={handleSignUp}
                 >
                     Create an account
-                </Button>
+                </Box>
+
                 <Box mt={2} textAlign="center">
                     <Typography>Already have an account?</Typography>
-                    <Link onClick={() => navigate('/signin')} style={{ cursor: 'pointer' }}>
+                    <Link
+                        to='/signin'
+                        style={{ cursor: 'pointer' }}>
                         Log in instead
                     </Link>
                 </Box>
