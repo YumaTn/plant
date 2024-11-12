@@ -1,7 +1,8 @@
-import { Paper, Grid, Typography, Button, TextField } from '@mui/material';
+import { Paper, Grid, Typography, Button, TextField, Box } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import Payment1 from '../../scss/Payment1.png';
+import Payment2 from '../../scss/Payment2.png';
 const Cart = () => {
   return (
     <Grid container spacing={2} sx={{ marginTop: 5 }}>
@@ -10,10 +11,18 @@ const Cart = () => {
           <Typography variant="h6" sx={{ borderBottom: '1px solid #ccc', paddingBottom: 1 }}>
             Shopping Cart
           </Typography>
+          
           {/* Nội dung giỏ hàng */}
           <Grid container spacing={1} sx={{ marginTop: 2 }} alignItems="center">
             <Grid item xs={6} sm={4}>
-              <Typography variant="body1">4K UHD LED Smart TV with Chromecast Built-in</Typography>
+              <Box display="flex" alignItems="center">
+                <img
+                  src={Payment1} // Đường dẫn hình ảnh TV
+                  alt="TV"
+                  style={{ width: 50, height: 50, marginRight: 8 }}
+                />
+                <Typography variant="body1">4K UHD LED Smart TV with Chromecast Built-in</Typography>
+              </Box>
             </Grid>
             <Grid item xs={2}>
               <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'center' }}>
@@ -42,7 +51,14 @@ const Cart = () => {
 
           <Grid container spacing={1} sx={{ marginTop: 1 }} alignItems="center">
             <Grid item xs={6} sm={4}>
-              <Typography variant="body1">Wired Over-Ear Gaming Headphones with USB</Typography>
+              <Box display="flex" alignItems="center">
+                <img
+                  src={Payment2} // Đường dẫn hình ảnh tai nghe
+                  alt="Headphones"
+                  style={{ width: 50, height: 50, marginRight: 8 }}
+                />
+                <Typography variant="body1">Wired Over-Ear Gaming Headphones with USB</Typography>
+              </Box>
             </Grid>
             <Grid item xs={2}>
               <Typography variant="body2" color="textSecondary" sx={{ textAlign: 'center' }}>
@@ -71,13 +87,9 @@ const Cart = () => {
 
           {/* Căn chỉnh nút "Update Cart" và "Return to Shop" */}
           <Grid container justifyContent="space-between" sx={{ marginTop: 2 }}>
-            <Link
-            components={Link}
-            to='/shop/newproduct'
-            >
-            <Button variant="outlined" sx={{color:'black',borderColor:'black'}}>Return to Shop</Button>
+            <Link to="/shop/newproduct">
+              <Button variant="outlined" sx={{ color: 'black', borderColor: 'black' }}>Return to Shop</Button>
             </Link>
-            <Button variant="outlined" sx={{color:'black',borderColor:'black',fontWeight:'bold'}}>Update Cart</Button>
           </Grid>
         </Paper>
       </Grid>
@@ -94,11 +106,8 @@ const Cart = () => {
               <Typography variant="body1">Discount: $24</Typography>
               <Typography variant="body1">Tax: $61.99</Typography>
               <Typography variant="h6" sx={{ marginTop: 2 }}>Total: $357.99 USD</Typography>
-              <Link
-              to='/payment'
-              components={Link}
-              >
-              <Button variant="contained" sx={{ marginTop: 2,backgroundColor:'green',width:'100%' }}>Proceed to Checkout</Button>
+              <Link to="/payment">
+                <Button variant="contained" sx={{ marginTop: 2, backgroundColor: 'green', width: '100%' }}>Proceed to Checkout</Button>
               </Link>
             </Paper>
           </Grid>
@@ -111,7 +120,7 @@ const Cart = () => {
                 placeholder="Coupon (not required)"
                 sx={{ marginTop: 1 }}
               />
-              <Button variant="contained" sx={{ marginTop: 1,backgroundColor:'green',width:'100%' }}>Apply Coupon</Button>
+              <Button variant="contained" sx={{ marginTop: 1, backgroundColor: 'green', width: '100%' }}>Apply Coupon</Button>
             </Paper>
           </Grid>
         </Grid>

@@ -4,8 +4,8 @@ import axios from 'axios';
 import SearchProduct from '../Shop/SearchProduct';
 import { Link } from 'react-router-dom';
 
-const Bonsai = () => {
-    const [bonsaiList, setBonsaiList] = useState([]);
+const AllProduct = () => {
+    const [AllProductList, setAllProductList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const Bonsai = () => {
                 });
                 
                 if (response.data.success) {
-                    setBonsaiList(response.data.data.pageData);
+                    setAllProductList(response.data.data.pageData);
                 }
             } catch (error) {
                 console.error("Error fetching the plants data:", error);
@@ -40,7 +40,7 @@ const Bonsai = () => {
         <>
             <SearchProduct searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
-                {bonsaiList.map((plant) => (
+                {AllProductList.map((plant) => (
                     <Grid item key={plant.id}>
                         <Card sx={{ width: 300, borderRadius: '10px', boxShadow: 3 }}>
                             <CardMedia
@@ -71,4 +71,4 @@ const Bonsai = () => {
     );
 }
 
-export default Bonsai;
+export default AllProduct;
