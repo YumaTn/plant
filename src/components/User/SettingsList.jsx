@@ -6,10 +6,15 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { SettingsListIcon } from '../../scss/icon';
 import { Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function NestedList() {
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.clear();  // Xóa hết dữ liệu trong localStorage
+    navigate('/signin');   // Điều hướng về trang đăng nhập
+  };
   return (
     <List
       sx={{ width: '264px',height:'312px', maxWidth: 360, bgcolor: 'background.paper',borderRadius:1,marginLeft:'60px',top:'109px',marginBottom:50 }}
@@ -81,11 +86,11 @@ export default function NestedList() {
         to="/signin"
         style={{ textDecoration: 'none',color:'black' }}
         >
-      <ListItemButton>
+      <ListItemButton onClick={handleLogout}>
         <ListItemIcon>
-        <SettingsListIcon/>
+          <SettingsListIcon />
         </ListItemIcon>
-        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Logout</Typography>}/>
+        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Logout</Typography>} />
       </ListItemButton>
       </Link>
     </List>

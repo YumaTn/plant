@@ -120,13 +120,15 @@ export default function AdminNavbar() {
   const getTitle = () => {
     switch (location.pathname) {
       case '/admin/product':
-        return 'Product';
+        return 'Sản phẩm';
       case '/admin/blog':
         return 'Blog';
       case '/admin/profile':
-        return 'Profile';
+        return 'Thông tin cá nhân';
+        case '/admin/manageUser':
+        return 'Quản lý người dùng';
       default:
-        return 'Dashboard'; // Mặc định là "Dashboard"
+        return 'Dữ liệu'; 
     }
   };
 
@@ -160,13 +162,13 @@ export default function AdminNavbar() {
           <ListItem button onClick={() => handleNavigation('/')} disablePadding sx={{ display: 'block' }}>
             <ListItemButton>
               <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary="Dữ liệu" />
             </ListItemButton>
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/admin/product')} disablePadding sx={{ display: 'block' }}>
             <ListItemButton>
               <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Product" />
+              <ListItemText primary="Sản phẩm" />
             </ListItemButton>
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/admin/blog')} disablePadding sx={{ display: 'block' }}>
@@ -175,10 +177,16 @@ export default function AdminNavbar() {
               <ListItemText primary="Blog" />
             </ListItemButton>
           </ListItem>
+          <ListItem button onClick={() => handleNavigation('/admin/manageUser')} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton>
+              <ListItemIcon><InboxIcon /></ListItemIcon>
+              <ListItemText primary="Quản lý người dùng" />
+            </ListItemButton>
+          </ListItem>
           <ListItem button onClick={() => handleNavigation('/admin/profile')} disablePadding sx={{ display: 'block' }}>
             <ListItemButton>
               <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Profile" />
+              <ListItemText primary="Thông tin cá nhân" />
             </ListItemButton>
           </ListItem>
         </List>

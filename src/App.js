@@ -36,12 +36,14 @@ import StaffFollowProduct from './components/Staff/Staff/StaffFollowProduct';
 import StaffProduct from './components/Staff/Staff/StaffProduct';
 import StaffProfile from './components/Staff/Staff/StaffProfile';
 import Staff from './components/Staff/StaffNavbar/Staff';
+import AdminMangeUser from './components/Admin/AdminPage/AdminMangeUser';
+import AllProduct from './components/Products/AllProduct';
 
 const clientId="428558537254-k9petgo1lqik4aldtokef39jeibi57l4.apps.googleusercontent.com"
 
 function App() {
   const isAdmin = false;
-  const isStaff = true;
+  const isStaff = false;
   useEffect(()=>{
     function start(){
       gapi.client.init({
@@ -60,6 +62,7 @@ function App() {
             <Route path="/" element={<AdminDashboard/>} />
             <Route path="/admin/blog" element={<AdminBlog/>} />
             <Route path="/admin/product" element={<AdminProduct/>} />
+            <Route path="/admin/manageUser" element={<AdminMangeUser/>} />
             <Route path="/admin/profile" element={<AdminProfile/>} />
             </Route>
           </Routes>
@@ -85,6 +88,7 @@ function App() {
           <Route path="/productdetail/:id" element={<ProductDetail />} />
 
           <Route path="/shop" element={<Shop />}>
+          <Route path="allProduct" element={<AllProduct />} />
             <Route path="newproduct" element={<NewProduct />} />
             <Route path="bonsai" element={<Bonsai />} />
             <Route path="cactus" element={<Cactus />} />

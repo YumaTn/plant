@@ -94,41 +94,51 @@ const ProductDetail = () => {
 
                         {/* Tùy chọn sản phẩm */}
                         <Box style={{ marginTop: '20px', maxWidth: '300px' }}>
-                            <FormControl fullWidth style={{ marginBottom: '20px' }}>
-                                <InputLabel>Quantity</InputLabel>
-                                <Select value={quantity} onChange={(e) => setQuantity(e.target.value)}>
-                                    {[...Array(10).keys()].map((num) => (
-                                        <MenuItem key={num} value={num + 1}>{num + 1}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormControl fullWidth style={{ marginBottom: '20px' }}>
-                                <InputLabel>Include Planter</InputLabel>
-                                <Select value={includePlanter} onChange={(e) => setIncludePlanter(e.target.value)}>
-                                    <MenuItem value="yes">Yes</MenuItem>
-                                    <MenuItem value="no">No</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <TextField
-                                label="Enter your Pincode"
-                                value={zipcode}
-                                onChange={(e) => setZipcode(e.target.value)}
-                                fullWidth
-                                style={{ marginBottom: '20px' }}
-                            />
-                            <Link
-                            components={Link}
-                            to="/cart"
-                            >
-                            <Button
-                                variant="contained"
-                                fullWidth
-                                sx={{ backgroundColor: '#3B823E', '&:hover': { backgroundColor: '#336E34' } }}
-                            >
-                                Add to Cart
-                            </Button>
-                            </Link>
-                        </Box>
+    {/* Quantity Field */}
+    <FormControl fullWidth style={{ marginBottom: '30px' }}>
+        <TextField
+            label="Quantity"
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            inputProps={{ min: 1 }} // Đặt giới hạn nhỏ nhất là 1
+            sx={{
+                '& input': { textAlign: 'left' }, // Căn giữa giá trị trong ô nhập
+            }}
+        />
+    </FormControl>
+
+    {/* Include Planter Field */}
+    <FormControl fullWidth style={{ marginBottom: '30px' }}>
+        <InputLabel sx={{ top: -5, left: -14 }}>Include Planter</InputLabel>
+        <Select value={includePlanter} onChange={(e) => setIncludePlanter(e.target.value)}>
+            <MenuItem value="yes">Yes</MenuItem>
+            <MenuItem value="no">No</MenuItem>
+        </Select>
+    </FormControl>
+    
+    {/* Zipcode Field */}
+    <TextField
+        label="Enter your Pincode"
+        value={zipcode}
+        onChange={(e) => setZipcode(e.target.value)}
+        fullWidth
+        style={{ marginBottom: '20px' }}
+    />
+    
+    <Link
+        components={Link}
+        to="/cart"
+    >
+        <Button
+            variant="contained"
+            fullWidth
+            sx={{ backgroundColor: '#3B823E', '&:hover': { backgroundColor: '#336E34' } }}
+        >
+            Add to Cart
+        </Button>
+    </Link>
+</Box>
                     </Grid>
                 </Grid>
 
