@@ -18,6 +18,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CategoryIcon from '@mui/icons-material/Category';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 240;
 
@@ -58,6 +62,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#436E35',
   variants: [
     {
       props: ({ open }) => open,
@@ -73,25 +78,34 @@ const AppBar = styled(MuiAppBar, {
   ],
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })( 
   ({ theme }) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    '& .MuiDrawer-paper': {
+      backgroundColor: '#FF5733',
+    },
     variants: [
       {
         props: ({ open }) => open,
         style: {
           ...openedMixin(theme),
-          '& .MuiDrawer-paper': openedMixin(theme),
+          '& .MuiDrawer-paper': {
+            ...openedMixin(theme),
+            backgroundColor: '#F5F5DC',
+          },
         },
       },
       {
         props: ({ open }) => !open,
         style: {
           ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
+          '& .MuiDrawer-paper': {
+            ...closedMixin(theme),
+            backgroundColor: '#F5F5DC',
+          },
         },
       },
     ],
@@ -101,8 +115,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function StaffNavbar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [selectedIndex, setSelectedIndex] = React.useState(null); // Track selected index
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -112,21 +127,28 @@ export default function StaffNavbar() {
     setOpen(false);
   };
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path, index) => {
+    setSelectedIndex(index); // Update selected index when a menu item is clicked
+    if (path === '/signin') {
+      localStorage.clear();
+    }
     navigate(path);
   };
 
-  // Xác định tiêu đề dựa trên đường dẫn
   const getTitle = () => {
     switch (location.pathname) {
-      case '/admin/product':
+      case '/staff/product':
         return 'Product';
-      case '/admin/blog':
-        return 'Blog';
-      case '/admin/profile':
+      case '/staff/profile':
         return 'Profile';
+      case '/staff/follow':
+        return 'Theo dõi sản phẩm';
+      case '/staff':
+        return 'Dashboard';
+      case '/staff/edit/:id':
+        return 'Dashboard';
       default:
-        return 'Dashboard'; // Mặc định là "Dashboard"
+        return '';
     }
   };
 
@@ -145,7 +167,7 @@ export default function StaffNavbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            {getTitle()}  {/* Hiển thị tiêu đề dựa trên đường dẫn */}
+            {getTitle()}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -157,22 +179,34 @@ export default function StaffNavbar() {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem button onClick={() => handleNavigation('/staff/product')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Product" />
+          <ListItem button onClick={() => handleNavigation('/staff', 0)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 0 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
+              <ListItemIcon><DashboardIcon /></ListItemIcon>
+              <ListItemText primary="Dashboard" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Follow Product" />
+          <ListItem button onClick={() => handleNavigation('/staff/product', 1)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 1 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
+              <ListItemIcon><CategoryIcon /></ListItemIcon>
+              <ListItemText primary="Sản phẩm" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/staff/profile')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
+          <ListItem button onClick={() => handleNavigation('/staff/follow', 2)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 2 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
+              <ListItemIcon><ReceiptIcon /></ListItemIcon>
+              <ListItemText primary="Theo dõi sản phẩm" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/staff/profile', 3)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 3 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
+              <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+              <ListItemText primary="Thông tin người dùng" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/signin', 4)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 4 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
               <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary="Profile" />
+              <ListItemText primary="Đăng xuất" />
             </ListItemButton>
           </ListItem>
         </List>

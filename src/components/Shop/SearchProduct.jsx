@@ -2,11 +2,7 @@ import React from 'react';
 import { Box, TextField} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchProduct = ({searchTerm,setSearchTerm}) => {
-
-  const handleSearch = () => {
-    console.log("Searching for:", searchTerm);
-  };
+const SearchProduct = ({searchTerm, setSearchTerm, handleSearch}) => {
 
   return (
     <Box>

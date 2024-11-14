@@ -29,6 +29,7 @@ export default function FolderList() {
         });
         const { userName, address, email, phoneNumber } = response.data.data;
         setBuildingInfo({
+          
           userName: userName || '', // Nếu không có, để trống
           address: address || '',
           email: email || '',

@@ -28,8 +28,9 @@ export default function FolderList() {
             Authorization: `Bearer ${token}`, 
           },
         });
-        const { userName, address, email, phoneNumber } = response.data.data;
+        const { userName, address, email, phoneNumber,imgUrl } = response.data.data;
         setUserInfo({
+          imgUrl: imgUrl || '',
           userName: userName || '', 
           address: address || '',
           email: email || '',
@@ -51,9 +52,11 @@ export default function FolderList() {
       <Divider />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <ImageIcon />
-          </Avatar>
+        <Avatar
+                    alt="User Avatar"
+                    src={userInfo.imgUrl || "/path-to-avatar-image.jpg"}  
+                    sx={{ width: 50, height: 50 }}
+                />
         </ListItemAvatar>
         <Box sx={{ flexGrow: 1 }}>
           <ListItemText

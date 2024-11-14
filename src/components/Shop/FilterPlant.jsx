@@ -22,7 +22,6 @@ export default function FilterPlant() {
       status: true
     })
       .then(response => {
-        console.log(response.data)
         if (response.data.success) {
           setEcologicalData(response.data.data.pageData);
         }
@@ -45,12 +44,13 @@ export default function FilterPlant() {
       aria-labelledby="nested-list-subheader"
     >
       {/* All Categories */}
+      <Link to={`/shop/AllProduct`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItemButton>
         <ListItemIcon>
         </ListItemIcon>
         <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Tất cả sản phẩm</Typography>} />
       </ListItemButton>
-
+      </Link>
       {/* Hiển thị các danh mục từ API */}
       {ecologicalData.map((category) => (
         <React.Fragment key={category.id}>

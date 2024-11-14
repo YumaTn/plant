@@ -1,21 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, IconButton } from '@mui/material';
+import { Box, Typography, Grid, IconButton, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import axios from 'axios';
 
 export default function BrowsingHistory() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Trang hiện tại
   const productsPerPage = 4; // Số lượng sản phẩm trên mỗi trang
-
-  // Fetch data from the API
+  const formatPrice = (price) => {
+    return price.toLocaleString('vi-VN');
+  };
+  // Fetch data from the first API to get the product IDs
   useEffect(() => {
-    fetch('https://66f127da41537919154fc1b0.mockapi.io/plant')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error('Error fetching data:', error));
+    // Get token from localStorage
+    const tokenData = JSON.parse(localStorage.getItem('userData')) || {};
+    const token = tokenData.token;
+
+    axios.get('https://exe201be.io.vn/api/cart/cartbycurrentuser', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        if (response.data.success) {
+          const orderDetails = response.data.data.orderDetails || [];
+          const productIds = orderDetails.map(order => order.productId); // Extract productIds
+
+          // Fetch product data for each productId
+          const productPromises = productIds.map(productId =>
+            axios.get(`https://exe201be.io.vn/api/product/byid/${productId}`, {
+              headers: { Authorization: `Bearer ${token}` }
+            })
+          );
+
+          // After all product data is fetched, set the state with the product details
+          Promise.all(productPromises)
+            .then(productResponses => {
+              const formattedProducts = productResponses.map(productResponse => {
+                const { name, price, urlImg, id } = productResponse.data.data || {}; // Extract name, price, urlImg
+                return { name, price, urlImg, id };
+              });
+              setProducts(formattedProducts); // Set the products to state
+            })
+            .catch(error => {
+              console.error('Error fetching product data:', error);
+            });
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching cart data:', error);
+      });
   }, []);
 
   // Tính toán số lượng trang dựa trên số sản phẩm và số sản phẩm trên mỗi trang
@@ -65,29 +100,27 @@ export default function BrowsingHistory() {
         <Link to="/userlist/orderhistory" style={{ textDecoration: 'none' }}>
           <Typography variant="body2" color="#FA8232">
             View All{' '}
-            <ArrowForwardIcon
-              sx={{ marginBottom: -0.8, color: '#FA8232' }}
-            />
+            <ArrowForwardIcon sx={{ marginBottom: -0.8, color: '#FA8232' }} />
           </Typography>
         </Link>
       </Box>
 
       {/* Hiển thị các sản phẩm */}
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
         sx={{
           marginRight: 10.3,
-          marginLeft: 0.1,  
-          maxWidth: '100%', 
-          background:'#ffffff ',
-          padding:5
+          marginLeft: 0.1,
+          maxWidth: '100%',
+          background: '#ffffff ',
+          padding: 5
         }}
       >
         <Grid container spacing={2}>
-          {getCurrentPageProducts().map((product) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+          {getCurrentPageProducts().map((product, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <Box
                 sx={{
                   border: 1,
@@ -99,28 +132,39 @@ export default function BrowsingHistory() {
                   backgroundColor: '#fff',
                 }}
               >
+                {/* Fixed image size */}
                 <img
-                  src={product.image}
+                  src={product.urlImg} // Use urlImg for the image source
                   alt={product.name}
-                  style={{ width: '100%', height: 'auto', borderRadius: 4 }}
+                  style={{
+                    width: '100%', // Ensures the image stretches across the box
+                    height: 200, // Fixed height for the image
+                    objectFit: 'cover', // Ensures the image covers the area
+                    borderRadius: 4
+                  }}
                 />
-                
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    mt: 2, 
-                    whiteSpace: 'nowrap', 
-                    overflow: 'hidden', 
-                    textOverflow: 'ellipsis', 
-                    maxWidth: '100%' 
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    mt: 2,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '100%'
                   }}
                 >
                   {product.name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  {`$${product.price}`}
+                  {formatPrice(product.price)}VNĐ
                 </Typography>
               </Box>
+              <Link to={`/productdetail/${product.id}`} style={{ textDecoration: 'none' }}>
+                <Button variant="contained" sx={{ backgroundColor: "#3B823E", width: '100%' }}>
+                  Mua
+                </Button>
+              </Link>
             </Grid>
           ))}
         </Grid>

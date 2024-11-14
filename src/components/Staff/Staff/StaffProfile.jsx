@@ -1,8 +1,9 @@
 import React from 'react'
+import Profile from '../../User/Profile'
 
 const StaffProfile = () => {
   return (
-    <div>StaffProfile</div>
+    <Profile/>
   )
 }
 

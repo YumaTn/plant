@@ -16,8 +16,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate, useLocation } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CategoryIcon from '@mui/icons-material/Category';
+import BookIcon from '@mui/icons-material/Book';
+import GroupIcon from '@mui/icons-material/Group';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 240;
 
@@ -58,6 +63,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#436E35',
   variants: [
     {
       props: ({ open }) => open,
@@ -73,25 +79,34 @@ const AppBar = styled(MuiAppBar, {
   ],
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })( 
   ({ theme }) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    '& .MuiDrawer-paper': {
+      backgroundColor: '#FF5733', 
+    },
     variants: [
       {
         props: ({ open }) => open,
         style: {
           ...openedMixin(theme),
-          '& .MuiDrawer-paper': openedMixin(theme),
+          '& .MuiDrawer-paper': {
+            ...openedMixin(theme),
+            backgroundColor: '#F5F5DC', 
+          },
         },
       },
       {
         props: ({ open }) => !open,
         style: {
           ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
+          '& .MuiDrawer-paper': {
+            ...closedMixin(theme),
+            backgroundColor: '#F5F5DC',
+          },
         },
       },
     ],
@@ -102,7 +117,8 @@ export default function AdminNavbar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
-  const location = useLocation();  // Hook để lấy đường dẫn hiện tại
+  const location = useLocation();
+  const [selectedIndex, setSelectedIndex] = React.useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -112,11 +128,16 @@ export default function AdminNavbar() {
     setOpen(false);
   };
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path, index) => {
+    setSelectedIndex(index);  // Set the selected index when navigating
     navigate(path);
   };
 
-  // Xác định tiêu đề dựa trên đường dẫn
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/signin');
+  };
+
   const getTitle = () => {
     switch (location.pathname) {
       case '/admin/product':
@@ -125,10 +146,12 @@ export default function AdminNavbar() {
         return 'Blog';
       case '/admin/profile':
         return 'Thông tin cá nhân';
-        case '/admin/manageUser':
+      case '/admin/manageUser':
         return 'Quản lý người dùng';
+      case '/admin':
+        return 'Dữ liệu';
       default:
-        return 'Dữ liệu'; 
+        return '';
     }
   };
 
@@ -147,7 +170,7 @@ export default function AdminNavbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            {getTitle()}  {/* Hiển thị tiêu đề dựa trên đường dẫn */}
+            {getTitle()}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -159,34 +182,43 @@ export default function AdminNavbar() {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem button onClick={() => handleNavigation('/')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
+          <ListItem button onClick={() => handleNavigation('/admin', 0)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 0} sx={{ backgroundColor: selectedIndex === 0 ? '#D9D9D9' : 'transparent' }}>
+              <ListItemIcon><DashboardIcon /></ListItemIcon>
               <ListItemText primary="Dữ liệu" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/product')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
+          <ListItem button onClick={() => handleNavigation('/admin/product', 1)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 1} sx={{ backgroundColor: selectedIndex === 1 ? '#D9D9D9' : 'transparent' }}>
+              <ListItemIcon><CategoryIcon /></ListItemIcon>
               <ListItemText primary="Sản phẩm" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/blog')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
+          <ListItem button onClick={() => handleNavigation('/admin/blog', 2)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 2} sx={{ backgroundColor: selectedIndex === 2 ? '#D9D9D9' : 'transparent' }}>
+              <ListItemIcon><BookIcon /></ListItemIcon>
               <ListItemText primary="Blog" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/manageUser')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
+          <ListItem button onClick={() => handleNavigation('/admin/manageUser', 3)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 3} sx={{ backgroundColor: selectedIndex === 3 ? '#D9D9D9' : 'transparent' }}>
+              <ListItemIcon><GroupIcon /></ListItemIcon>
               <ListItemText primary="Quản lý người dùng" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/profile')} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon><InboxIcon /></ListItemIcon>
+          <ListItem button onClick={() => handleNavigation('/admin/profile', 4)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 4} sx={{ backgroundColor: selectedIndex === 4 ? '#D9D9D9' : 'transparent' }}>
+              <ListItemIcon><AccountCircleIcon /></ListItemIcon>
               <ListItemText primary="Thông tin cá nhân" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button onClick={handleLogout} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton>
+              <ListItemIcon><LogoutIcon /></ListItemIcon>
+              <ListItemText primary="Đăng xuất" />
             </ListItemButton>
           </ListItem>
         </List>

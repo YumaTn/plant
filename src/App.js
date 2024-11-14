@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Blog from './components/Blog/Blog';
 import Home from './HomeUser/Home';
-import Contact from './components/Contact/Contact';
 import User from './components/User/User';
 import Layout from './components/Layout';
 import OrderHistory from './components/OrderHistory/OrderHistory';
@@ -38,9 +37,13 @@ import StaffProfile from './components/Staff/Staff/StaffProfile';
 import Staff from './components/Staff/StaffNavbar/Staff';
 import AdminMangeUser from './components/Admin/AdminPage/AdminMangeUser';
 import AllProduct from './components/Products/AllProduct';
+import Header from './components/Header';
+import EditProduct from './components/Staff/ProductStaffAndAdmin/EditProduct';
+import StaffDashboard from './components/Staff/Staff/StaffDashboard';
+import CreateProduct from './components/Staff/ProductStaffAndAdmin/CreateProduct';
+import PaymentSuccess from './components/Cart/PaymentSuccess';
 
 const clientId="428558537254-k9petgo1lqik4aldtokef39jeibi57l4.apps.googleusercontent.com"
-
 function App() {
   const isAdmin = false;
   const isStaff = false;
@@ -48,7 +51,7 @@ function App() {
     function start(){
       gapi.client.init({
         clientId:clientId,
-        scope:""
+        scope:"openid"
       })
     };
     gapi.load("client:auth2",start);
@@ -56,32 +59,34 @@ function App() {
 
   return (
     <BrowserRouter>
-    {isAdmin ? (
           <Routes>
-            <Route path="/" element={<Admin/>}>
-            <Route path="/" element={<AdminDashboard/>} />
-            <Route path="/admin/blog" element={<AdminBlog/>} />
-            <Route path="/admin/product" element={<AdminProduct/>} />
-            <Route path="/admin/manageUser" element={<AdminMangeUser/>} />
-            <Route path="/admin/profile" element={<AdminProfile/>} />
+            <Route path="/admin" element={<Admin/>}>
+            <Route path="/admin" element={<AdminDashboard/>} />
+            <Route path="blog" element={<AdminBlog/>} />
+            <Route path="product" element={<AdminProduct/>} />
+            <Route path="manageUser" element={<AdminMangeUser/>} />
+            <Route path="profile" element={<AdminProfile/>} />
+            <Route path="edit/:id" element={<EditProduct />} />
+            <Route path="create" element={<CreateProduct />} />
             </Route>
           </Routes>
-      ) : isStaff ? (
         <Routes>
-          <Route path="/" element={<Staff />}>
-            <Route path="/" element={<StaffFollowProduct />} /> 
+          <Route path="/staff" element={<Staff />}>
+          <Route path="/staff" element={<StaffDashboard/>} />
+            <Route path="/staff/follow" element={<StaffFollowProduct />} /> 
             <Route path="/staff/product" element={<StaffProduct />} />
             <Route path="/staff/profile" element={<StaffProfile />} />
+            <Route path="/staff/edit/:id" element={<EditProduct />} />
+            <Route path="/staff/edit/:id" element={<CreateProduct />} />
           </Route>
         </Routes>
-      ) :(
-      <Layout>
+
         <Routes>
+          <Route path='/' element={<Header/>}>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
 
           <Route path="/blogdetail/:id" element={<BlogDetail />} />
@@ -95,7 +100,7 @@ function App() {
             <Route path="creepers" element={<Creepers />} />
             <Route path="succulent" element={<Succulents />} />
             <Route path="seeds" element={<Seeds />} />
-            <Route path="decorateItem" element={<DecorateItem />} />
+            <Route path="decorateItems" element={<DecorateItem />} />
             <Route path="bestselling" element={<BestSelling />} />
           </Route>
 
@@ -107,7 +112,7 @@ function App() {
             <Route path="FAQ" element={<FAQ />} />
           </Route>
 
-          <Route path="/newproduct" element={<NewProduct />} />
+            <Route path="/newproduct" element={<NewProduct />}/>
             <Route path="/bonsai" element={<Bonsai />} />
             <Route path="/cactus" element={<Cactus />} />
             <Route path="/creepers" element={<Creepers />} />
@@ -116,10 +121,9 @@ function App() {
             <Route path="/decorateItem" element={<DecorateItem />} />
             <Route path="/bestselling" element={<BestSelling />} />
             <Route path='/payment' element={<Payment/>}/>
+            <Route path='/payment/successfully' element={<PaymentSuccess/>}/>
+            </Route>
         </Routes>
-        <Footer />
-      </Layout>
-      )}
     </BrowserRouter>
   );
 }

@@ -6,13 +6,13 @@ import MoneyDashboard from '../Dashboard/MoneyDashboard';
 
 const AdminDashboard = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Box sx={{ display: 'flex', gap: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box >
         <UserDashboard />
-        <ProductDashboard />
+        <MoneyDashboard />
       </Box>
       <Box sx={{ mt: 2 }}>
-        <MoneyDashboard />
+        <ProductDashboard />
       </Box>
     </Box>
   );

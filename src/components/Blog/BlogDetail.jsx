@@ -31,7 +31,18 @@ const BlogDetail = () => {
         <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold', color: '#333', marginTop: '50px' }}>
           {blogDetail.title}
         </Typography>
-        <Typography variant="subtitle2" sx={{ color: '#777', mt: 1 }}>
+        <Typography variant="subtitle2" sx={{ color: '#777', mt: 1, display: 'flex', alignItems: 'center' }}>
+          <Box
+            component="img"
+            src={blogDetail.urlAvatar}
+            alt="avatar"
+            sx={{
+              width: 50, // Điều chỉnh kích thước avatar
+              height: 50,
+              borderRadius: '50%', // Bo tròn hình ảnh
+              marginRight: 1, // Khoảng cách giữa avatar và tên người dùng
+            }}
+          />
           <span className="author">{blogDetail.userName}</span>
           <span className="date" style={{ marginLeft: '10px' }}>
             {new Date(blogDetail.date).toLocaleDateString()}
@@ -47,15 +58,6 @@ const BlogDetail = () => {
         {/* Hiển thị các hình ảnh khác nếu có */}
         {blogDetail.urlImg2 && (
           <Box component="img" src={blogDetail.urlImg2} alt="Blog Detail 2" sx={{ width: '100%', height: 'auto', mb: 2 }} />
-        )}
-        {blogDetail.urlImg3 && (
-          <Box component="img" src={blogDetail.urlImg3} alt="Blog Detail 3" sx={{ width: '100%', height: 'auto', mb: 2 }} />
-        )}
-        {blogDetail.urlImg4 && (
-          <Box component="img" src={blogDetail.urlImg4} alt="Blog Detail 4" sx={{ width: '100%', height: 'auto', mb: 2 }} />
-        )}
-        {blogDetail.urlImg5 && (
-          <Box component="img" src={blogDetail.urlImg5} alt="Blog Detail 5" sx={{ width: '100%', height: 'auto', mb: 2 }} />
         )}
       </Box>
 
