@@ -1,236 +1,252 @@
-import React, { useState, useRef } from 'react';
-import { Box, Typography, Grid, IconButton, Button, TextField, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import { Remove as RemoveIcon, Add as AddIcon } from '@mui/icons-material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Grid, TextField, RadioGroup, Radio, Button } from '@mui/material';
 import Payment1 from '../../scss/Payment1.png';
-import Payment2 from '../../scss/Payment2.png';
 import momo from '../../scss/momo.png';
 import Cash from '../../scss/Cash.png';
 import Bank from '../../scss/Bank.png';
-import QRCode from '../../scss/QRCode.png'
+import QRCode from '../../scss/QRCode.png';
+import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
+
 const Payment = () => {
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: 'Plant Name', price: 99.0, quantity: 1, image: Payment1 },
-        { id: 2, name: 'Plant Name', price: 99.0, quantity: 1, image: Payment2 },
-    ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('momo');
+  const [productImages, setProductImages] = useState({});
+  const [userData, setUserData] = useState({
+    userName: '',
+    email: '',
+    dob: '',
+    address: '',
+    phoneNumber: '',
+    gender: '',
+    imgUrl: '',
+  });
+  const [orderNote, setOrderNote] = useState('');
+  const [finalPrice, setFinalPrice] = useState(0);
+  const [discount, setDiscount] = useState(0);
 
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('momo'); // State to manage selected radio
-    const radioRefs = {
-        momo: useRef(null),
-        cash: useRef(null),
-        card: useRef(null),
-    };
+  // Get passed data from Cart component
+  const location = useLocation();
+  const formatPrice = (price) => price.toLocaleString('vi-VN');
 
-    const handleQuantityChange = (id, action) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id
-                    ? {
-                        ...item,
-                        quantity: action === 'increment' ? item.quantity + 1 : Math.max(1, item.quantity - 1),
-                    }
-                    : item
-            )
-        );
-    };
+  useEffect(() => {
+    const tokenData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null;
+    const token = tokenData?.token;
+    const userId = tokenData?.userId;
 
-    const handleRemoveItem = (id) => {
-        setCartItems(cartItems.filter((item) => item.id !== id));
-    };
+    if (token && userId) {
+      // Fetch user details
+      axios.get(`https://exe201be.io.vn/api/user/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((response) => {
+          if (response.data.success) {
+            const user = response.data.data;
+            setUserData({
+              userName: user.userName,
+              email: user.email,
+              dob: user.dob || '',
+              address: user.address || '',
+              phoneNumber: user.phoneNumber || '',
+              gender: user.gender || '',
+              imgUrl: user.imgUrl || '',
+            });
+          }
+        })
+        .catch((error) => console.error('Error fetching user data:', error));
 
-    const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+      // Fetch cart items
+      axios.get('https://exe201be.io.vn/api/cart/cartbycurrentuser', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((response) => {
+          if (response.data.success) {
+            const items = response.data.data.orderDetails.map((item) => ({
+              id: item.id,
+              name: item.productName,
+              price: item.price,
+              quantity: item.quantity,
+              totalPrice: item.price * item.quantity,
+              productId: item.productId,
+            }));
+            setCartItems(items);
 
-    const handlePaymentChange = (event) => {
-        const value = event.target.value;
-        setSelectedPaymentMethod(value);
+            // Fetch product images
+            items.forEach((item) => {
+              axios.get(`https://exe201be.io.vn/api/product/byid/${item.productId}`)
+                .then((productResponse) => {
+                  if (productResponse.data.success) {
+                    setProductImages((prevImages) => ({
+                      ...prevImages,
+                      [item.productId]: productResponse.data.data.urlImg,
+                    }));
+                  }
+                })
+                .catch((error) => console.error('Error fetching product details:', error));
+            });
+          }
+        })
+        .catch((error) => console.error('Error fetching cart data:', error));
+    } else {
+      console.error('Token or userId not found!');
+    }
+  }, []);
 
-        // Focus vào radio tương ứng
-        const selectedRef = radioRefs[value];
-        if (selectedRef && selectedRef.current) {
-            selectedRef.current.focus();
-        }
-    };
+  useEffect(() => {
+    const paymentData = JSON.parse(localStorage.getItem('payment'));
+    if (paymentData) {
+      setFinalPrice(paymentData.finalPrice);
+      setDiscount(paymentData.discount);
+    }
+  }, []);
 
-    return (
-        <>
-            <Box padding={3} bgcolor="#f9f9f9" maxWidth={1000} boxShadow={2} borderRadius={2} margin="0 auto" marginTop={5}>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Your Cart Items
-                </Typography>
+  const subtotal = cartItems.reduce((total, item) => total + item.totalPrice, 0);
 
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <Grid container justifyContent="center">
-                            <Grid item xs={2}>
-                                <Typography variant="h6">Product</Typography>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Typography variant="h6">Price</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                                <Typography variant="h6">Quantity</Typography>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Typography variant="h6">Total</Typography>
-                            </Grid>
-                        </Grid>
+  const handlePaymentChange = (event) => {
+    setSelectedPaymentMethod(event.target.value);
+  };
 
-                        {cartItems.map((item) => (
-                            <Grid container key={item.id} alignItems="center" style={{ margin: '16px 0' }} justifyContent="center">
-                                <Grid item xs={2}>
-                                    <img src={item.image} alt={item.name} style={{ width: 80, height: 80 }} />
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <Typography>{item.name}</Typography>
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ cursor: 'pointer', textDecoration: 'underline', marginTop: 2 }}
-                                        onClick={() => handleRemoveItem(item.id)}
-                                    >
-                                        Remove
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={4} display="flex">
-                                    <Box border={'1px solid black'} borderRadius={2} padding="4px 8px" display="flex" alignItems="center">
-                                        <IconButton onClick={() => handleQuantityChange(item.id, 'decrement')} size="small">
-                                            <RemoveIcon />
-                                        </IconButton>
-                                        <Typography variant="body1" display="inline" style={{ padding: '0 8px' }}>
-                                            {item.quantity}
-                                        </Typography>
-                                        <IconButton onClick={() => handleQuantityChange(item.id, 'increment')} size="small">
-                                            <AddIcon />
-                                        </IconButton>
-                                    </Box>
-                                </Grid>
+  const handlePayment = () => {
+    // Get orderId, couponId from localStorage
+    const paymentData = JSON.parse(localStorage.getItem('payment'));
+    if (paymentData) {
+      const { orderId, couponId } = paymentData;
+      
+      // Prepare the data to send to the payment API
+      const paymentRequest = {
+        orderId,
+        couponId,
+        amount: finalPrice,
+        description: orderNote, 
+      };
 
-                                <Grid item xs={2}>
-                                    <Typography>${item.price * item.quantity}</Typography>
-                                </Grid>
-                            </Grid>
-                        ))}
+      // Call the payment API
+      axios.post('https://exe201be.io.vn/api/payment/geturlpayment', paymentRequest)
+        .then((response) => {
+          if (response.data.success) {
+            window.location.href = response.data.data.url;
+          } else {
+            console.error('Payment API failed:', response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('Error calling payment API:', error);
+        });
+    }
+  };
 
-                        <Grid container justifyContent="flex-end" style={{ marginTop: 16 }}>
-                            <Grid item xs={6} />
-                            <Grid item xs={6} container justifyContent="flex-end">
-                                <Box textAlign="right">
-                                    <Typography>
-                                        Subtotal:
-                                        <Box component="span" sx={{ marginLeft: 10 }}>
-                                            ${subtotal.toFixed(2)}
-                                        </Box>
-                                    </Typography>
-                                    <Typography>
-                                        Shipping:
-                                        <Box component="span" sx={{ marginLeft: 10 }}>
-                                            Flat Rate
-                                        </Box>
-                                    </Typography>
-                                    <Typography variant="h6">
-                                        Total:
-                                        <Box component="span" sx={{ marginLeft: 10 }}>
-                                            ${subtotal.toFixed(2)}
-                                        </Box>
-                                    </Typography>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+  return (
+    <>
+      <Box padding={3} bgcolor="#f9f9f9" maxWidth={1000} boxShadow={2} borderRadius={2} margin="0 auto" marginTop={5}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Your Cart Items
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justifyContent="center">
+              <Grid item xs={2}>
+                <Typography variant="h6">Product</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography variant="h6">Price</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="h6" sx={{ textAlign: 'center' }}>Quantity</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography variant="h6">Total</Typography>
+              </Grid>
+            </Grid>
+
+            {cartItems.map((item) => (
+              <Grid container key={item.id} alignItems="center" style={{ margin: '16px 0' }} justifyContent="center">
+                <Grid item xs={2}>
+                  <img src={productImages[item.productId] || Payment1} alt={item.name} style={{ width: 80, height: 80 }} />
                 </Grid>
-            </Box>
-
-            <Box sx={{ maxWidth: 1000, mx: 'auto', p: 3, bgcolor: '#f9f9f9', boxShadow: 2, borderRadius: 2, marginTop: 5 }}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
-                        <Typography variant="h6" gutterBottom>Billing Details</Typography>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField required label="First Name" fullWidth />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField required label="Last Name" fullWidth />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField required label="Phone" fullWidth />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField required label="Email Address" fullWidth />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField required label="Street Address" fullWidth />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField label="Building" fullWidth />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <Typography sx={{ marginBottom: 2 }} xs={1}>Order Note (optional)</Typography>
-                        <TextField label="Order notes (optional)" fullWidth multiline rows={3} />
-                        <Box mt={2} display="flex" justifyContent="center">
-                            <img src={QRCode} alt="QR Code" />
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={12} sx={{marginTop:-10}}>
-                        <Typography variant="h6" gutterBottom>Payment method</Typography>
-                        <RadioGroup row value={selectedPaymentMethod} onChange={handlePaymentChange}>
-                            <Box display="flex" flexDirection="column" alignItems="center" marginRight={2}>
-                                <Radio
-                                    value="momo"
-                                    sx={{
-                                        '&.Mui-checked': {
-                                            color: '#4caf50', 
-                                        },
-                                    }}
-                                />
-                                <img src={momo} alt="Momo" style={{ marginBottom: 5,width:'90%' }} />
-                                <Typography variant="body2">Momo</Typography>
-                            </Box>
-                            <Box display="flex" flexDirection="column" alignItems="center" marginRight={2}>
-                                <Radio
-                                    value="cash"
-                                    sx={{
-                                        '&.Mui-checked': {
-                                            color: '#4caf50',
-                                        },
-                                    }}
-                                />
-                                <img src={Cash} alt="Cash" style={{marginBottom: 5 }} />
-                                <Typography variant="body2">Cash</Typography>
-                            </Box>
-                            <Box display="flex" flexDirection="column" alignItems="center">
-                                <Radio
-                                    value="card"
-                                    sx={{
-                                        '&.Mui-checked': {
-                                            color: '#4caf50', 
-                                        },
-                                    }}
-                                />
-                                <img src={Bank} alt="Card" style={{  marginBottom: 5 }} />
-                                <Typography variant="body2">Card</Typography>
-                            </Box>
-                        </RadioGroup>
-                    </Grid>
-
-                    <Grid item xs={12} display="flex" justifyContent="flex-end">
-                        <Box
-                        sx={{
-                            border:'1px solid green',
-                            backgroundColor:'green',
-                            padding:5,
-                            paddingTop:1,
-                            paddingBottom:1,
-                            borderRadius:2,
-                            color:'white'
-                        }}
-                        >Place Order</Box>
-                    </Grid>
+                <Grid item xs={2}>
+                  <Typography>{item.name}</Typography>
                 </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="body1" sx={{ textAlign: 'center' }}>{item.quantity}</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Typography>{formatPrice(item.totalPrice)} VNĐ</Typography>
+                </Grid>
+              </Grid>
+            ))}
+
+            <Grid container justifyContent="flex-end" style={{ marginTop: 16 }}>
+              <Grid item xs={6} />
+              <Grid item xs={6} container justifyContent="flex-end">
+                <Box textAlign="right">
+                  <Typography>
+                    Tổng tiền:
+                    <Box component="span">{formatPrice(subtotal)} VNĐ</Box>
+                  </Typography>
+                  <Typography variant="body1" sx={{color:'red'}}>Giảm giá: {discount}%</Typography>
+                  <Typography variant="body1" sx={{color:'green'}}>Tổng tiền cuối cùng: {formatPrice(finalPrice)} VNĐ</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Box sx={{ maxWidth: 1000, mx: 'auto', p: 3, bgcolor: '#f9f9f9', boxShadow: 2, borderRadius: 2, marginTop: 5 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h6" gutterBottom>Billing Details</Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField label="User Name" value={userData.userName} fullWidth disabled />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField label="Phone" value={userData.phoneNumber} fullWidth disabled />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField label="Email Address" value={userData.email} fullWidth disabled />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField label="Street Address" value={userData.address} fullWidth disabled />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Typography sx={{ marginBottom: 2 }}>Order Note (optional)</Typography>
+            <TextField
+              label="Order notes (optional)"
+              fullWidth
+              multiline
+              rows={3}
+              value={orderNote}
+              onChange={(e) => setOrderNote(e.target.value)}
+            />
+            <Box mt={2} display="flex" justifyContent="center">
+              <img src={QRCode} alt="QR Code" />
             </Box>
-        </>
-    );
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>Payment method</Typography>
+            <RadioGroup row value={selectedPaymentMethod} onChange={handlePaymentChange}>
+              <Box display="flex" flexDirection="column" alignItems="center" marginRight={2}>
+                <Radio value="bank" sx={{ '&.Mui-checked': { color: '#4caf50' } }} />
+                <img src={Bank} alt="Bank" width={80} />
+              </Box>
+            </RadioGroup>
+            <Button
+              type="button"
+              style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#4caf50', color: 'white', border: 'none' }}
+              onClick={handlePayment}
+            >
+              Thanh toán
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
+  );
 };
 
 export default Payment;
