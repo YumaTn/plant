@@ -26,7 +26,7 @@ const Home = () => {
 
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN');
-};
+  };
 
   // Fetch data using axios
   const [products, setProducts] = useState([]);
@@ -44,18 +44,20 @@ const Home = () => {
 
         const response = await axios.post('https://exe201be.io.vn/api/product/search', requestData);
         const bestSellingProducts = response.data.data.pageData.filter(product => product.categoryName === 'bestSelling');
-        
+
         const filteredProducts = bestSellingProducts.slice(0, 4).map(product => ({
-          urlImg:product.urlImg,
+          urlImg: product.urlImg,
           name: product.name,
-          price: product.price
+          price: product.price,
+          id:product.id,
         }));
 
         const decorateItem = response.data.data.pageData.filter(product => product.categoryName === 'decorateItems');
         const filteredDecor = decorateItem.slice(0, 4).map(product => ({
-          urlImg:product.urlImg,
+          urlImg: product.urlImg,
           name: product.name,
-          price: product.price
+          price: product.price,
+          id:product.id,
         }));
         setCelebs(filteredDecor);
         setProducts(filteredProducts);
@@ -110,22 +112,24 @@ const Home = () => {
                   />
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h6" gutterBottom
-                    sx={{
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      WebkitLineClamp: 1, // Giới hạn tên hiển thị 1 dòng
-                      textOverflow: 'ellipsis', // Thêm dấu "..." nếu tên dài
-                  }}
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        WebkitLineClamp: 1, // Giới hạn tên hiển thị 1 dòng
+                        textOverflow: 'ellipsis', // Thêm dấu "..." nếu tên dài
+                      }}
                     >
                       {plant.name}
                     </Typography>
                     <Typography variant="body1" gutterBottom>
                       {formatPrice(plant.price)} VNĐ
                     </Typography>
-                    <Button sx={{ backgroundColor: 'green', color: 'white' }}>
-                      Buy Now
-                    </Button>
+                    <Link to={`/productdetail/${plant.id}`} style={{ textDecoration: 'none' }}>
+                      <Button variant="contained" sx={{ backgroundColor: "#3B823E", width: '100%' }}>
+                        Mua
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </Grid>
@@ -237,22 +241,24 @@ const Home = () => {
                   />
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h6" gutterBottom
-                    sx={{
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      WebkitLineClamp: 1, // Giới hạn tên hiển thị 1 dòng
-                      textOverflow: 'ellipsis', // Thêm dấu "..." nếu tên dài
-                  }}
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        WebkitLineClamp: 1, // Giới hạn tên hiển thị 1 dòng
+                        textOverflow: 'ellipsis', // Thêm dấu "..." nếu tên dài
+                      }}
                     >
                       {plant.name}
                     </Typography>
                     <Typography variant="body1" gutterBottom>
                       {formatPrice(plant.price)} VNĐ
                     </Typography>
-                    <Button sx={{ backgroundColor: 'green', color: 'white' }}>
-                      Buy Now
-                    </Button>
+                    <Link to={`/productdetail/${plant.id}`} style={{ textDecoration: 'none' }}>
+                      <Button variant="contained" sx={{ backgroundColor: "#3B823E", width: '100%' }}>
+                        Mua
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </Grid>
