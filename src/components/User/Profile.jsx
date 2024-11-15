@@ -90,14 +90,14 @@ const Profile = () => {
             </Grid>
             <Grid item xs={12} sm={9}>
                 <Grid item xs={12}>
-                    <h2>Account Setting</h2>
+                    <h2>Thông tin người dùng</h2>
                 </Grid>
 
                 <Grid container spacing={4}>
                     {/* Các trường thông tin */}
                     <Grid item xs={12} sm={6} md={6}>
                         <TextField
-                            label="Display Name"
+                            label="Họ và Tên"
                             fullWidth
                             value={displayName}
                             onChange={(e) => setDisplayName(e.target.value)}
@@ -105,7 +105,7 @@ const Profile = () => {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl fullWidth>
-                            <InputLabel>Gender</InputLabel>
+                            <InputLabel>Giới tính</InputLabel>
                             <Select
                                 value={gender}
                                 onChange={handleGenderChange}
@@ -129,7 +129,7 @@ const Profile = () => {
                     {/* Address */}
                     <Grid item xs={12} sm={6} md={6}>
                         <TextField
-                            label="Address"
+                            label="Địa chỉ"
                             fullWidth
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
@@ -138,7 +138,7 @@ const Profile = () => {
                     {/* Phone Number */}
                     <Grid item xs={12} sm={6} md={6}>
                         <TextField
-                            label="Phone Number"
+                            label="Số điện thoại"
                             fullWidth
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
@@ -147,7 +147,7 @@ const Profile = () => {
                 </Grid>
 
                 <Grid sx={{ marginTop: 5 }} item xs={12}>
-                    <Button variant="contained" color="primary" onClick={handleUpdateUserData}>Save Changes</Button>
+                    <Button variant="contained" color="primary" onClick={handleUpdateUserData}>Lưu</Button>
                 </Grid>
             </Grid>
         </Grid>

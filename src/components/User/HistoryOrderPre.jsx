@@ -14,33 +14,50 @@ import axios from 'axios';
 export default function HistoryOrderPre() {
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    // Get token from localStorage
-    const tokenData = JSON.parse(localStorage.getItem('userData')) || {};
-    const token = tokenData.token;
+  // Function to get token from localStorage
+  const getTokenFromStorage = () => {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        return JSON.parse(userData).token;
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+        return null;
+      }
+    }
+    return null;
+  };
 
-    // Fetch order history from API
-    axios.get('https://exe201be.io.vn/api/cart/cartbycurrentuser', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        if (response.data.success) {
-          const orderData = response.data.data.orderDetails || [];
-          
-          const formattedOrders = orderData.slice(0, 5).map(order => ({
-            id: order.orderId || '',
-            productName: order.productName || '',
-            date: order.date || '',
-            quantity: order.quantity || '',
-            price: order.price || 0
-          }));
-          
-          setOrders(formattedOrders);
+  // Call API to get orders data
+  useEffect(() => {
+    const token = getTokenFromStorage();
+
+    if (token) {
+      axios.post('https://exe201be.io.vn/api/order/allordercurrenuser', {
+        orderId: '',
+        pageNum: 1,
+        pageSize: 999,
+        status: 0
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       })
-      .catch(error => {
-        console.error('Error fetching order history:', error);
+      .then((response) => {
+        if (response.data.success) {
+          // Only take the first 5 orders
+          const first5Orders = response.data.data.pageData.slice(0, 5);
+          setOrders(first5Orders);
+        } else {
+          console.error('Error fetching data:', response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
       });
+    } else {
+      console.error('No token found in localStorage');
+    }
   }, []);
 
   return (
@@ -87,17 +104,19 @@ export default function HistoryOrderPre() {
               <TableCell align="center">Tên sản phẩm</TableCell>
               <TableCell align="center">Ngày</TableCell>
               <TableCell align="center">Số lượng</TableCell>
-              <TableCell align="center" >Giá</TableCell>
+              <TableCell align="center">Giá</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody component={Paper} >
+          <TableBody component={Paper}>
             {orders.map((order) => (
-              <TableRow key={order.id} >
+              <TableRow key={order.id}>
                 <TableCell align="center">{order.id}</TableCell>
-                <TableCell align="center">{order.productName}</TableCell>
+                <TableCell align="center">{order.orderDetails[0].productName}</TableCell>
                 <TableCell align="center">{order.date}</TableCell>
-                <TableCell align="center">{order.quantity}</TableCell>
-                <TableCell align="center">{order.price.toLocaleString('vi-VN')} VNĐ</TableCell>
+                <TableCell align="center">{order.orderDetails[0].quantity}</TableCell>
+                <TableCell align="center">
+                  {order.totalPrice.toLocaleString('vi-VN')} VNĐ
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

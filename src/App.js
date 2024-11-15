@@ -42,11 +42,10 @@ import EditProduct from './components/Staff/ProductStaffAndAdmin/EditProduct';
 import StaffDashboard from './components/Staff/Staff/StaffDashboard';
 import CreateProduct from './components/Staff/ProductStaffAndAdmin/CreateProduct';
 import PaymentSuccess from './components/Cart/PaymentSuccess';
+import AdminCreateBlog from './components/Admin/AdminPage/AdminCreateBlog';
 
 const clientId="428558537254-k9petgo1lqik4aldtokef39jeibi57l4.apps.googleusercontent.com"
 function App() {
-  const isAdmin = false;
-  const isStaff = false;
   useEffect(()=>{
     function start(){
       gapi.client.init({
@@ -68,16 +67,17 @@ function App() {
             <Route path="profile" element={<AdminProfile/>} />
             <Route path="edit/:id" element={<EditProduct />} />
             <Route path="create" element={<CreateProduct />} />
+            <Route path="blog/create" element={<AdminCreateBlog/>}/>
             </Route>
           </Routes>
         <Routes>
           <Route path="/staff" element={<Staff />}>
           <Route path="/staff" element={<StaffDashboard/>} />
-            <Route path="/staff/follow" element={<StaffFollowProduct />} /> 
-            <Route path="/staff/product" element={<StaffProduct />} />
-            <Route path="/staff/profile" element={<StaffProfile />} />
-            <Route path="/staff/edit/:id" element={<EditProduct />} />
-            <Route path="/staff/edit/:id" element={<CreateProduct />} />
+            <Route path="follow" element={<StaffFollowProduct />} /> 
+            <Route path="product" element={<StaffProduct />} />
+            <Route path="profile" element={<StaffProfile />} />
+            <Route path="edit/:id" element={<EditProduct />} />
+            <Route path="create" element={<CreateProduct />} />
           </Route>
         </Routes>
 
@@ -121,8 +121,8 @@ function App() {
             <Route path="/decorateItem" element={<DecorateItem />} />
             <Route path="/bestselling" element={<BestSelling />} />
             <Route path='/payment' element={<Payment/>}/>
-            <Route path='/payment/successfully' element={<PaymentSuccess/>}/>
             </Route>
+            <Route path='/payment/successfully' element={<PaymentSuccess/>}/>
         </Routes>
     </BrowserRouter>
   );

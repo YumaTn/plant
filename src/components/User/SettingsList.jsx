@@ -71,7 +71,7 @@ export default function NestedList() {
           <ListItemIcon>
             <SettingsListIcon />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Order History</Typography>} />
+          <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Lịch sử giao dịch</Typography>} />
         </ListItemButton>
       </Link>
 
@@ -111,7 +111,7 @@ export default function NestedList() {
           <ListItemIcon>
             <SettingsListIcon />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Setting</Typography>} />
+          <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Thông tin người dùng</Typography>} />
         </ListItemButton>
       </Link>
 
@@ -131,7 +131,7 @@ export default function NestedList() {
           <ListItemIcon>
             <SettingsListIcon />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Logout</Typography>} />
+          <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px' }}>Đăng xuất</Typography>} />
         </ListItemButton>
       </Link>
     </List>

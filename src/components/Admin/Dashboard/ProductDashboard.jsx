@@ -66,8 +66,8 @@ const ProductDashboard = () => {
   const secondHalf = categoryPercentages.slice(Math.ceil(categoryPercentages.length / 2));
 
   const chartProps = {
-    width: 500,
-    height: 300,
+    width: 300,
+    height: 200,
   };
 
   return (

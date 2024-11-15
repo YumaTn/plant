@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Grid, TextField, RadioGroup, Radio, Button } from '@mui/material';
+import { Box, Typography, Grid, TextField, RadioGroup, Radio, Button, Snackbar, Alert } from '@mui/material';
 import Payment1 from '../../scss/Payment1.png';
 import momo from '../../scss/momo.png';
 import Cash from '../../scss/Cash.png';
@@ -10,7 +10,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Payment = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('momo');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('bank');
   const [productImages, setProductImages] = useState({});
   const [userData, setUserData] = useState({
     userName: '',
@@ -24,6 +24,8 @@ const Payment = () => {
   const [orderNote, setOrderNote] = useState('');
   const [finalPrice, setFinalPrice] = useState(0);
   const [discount, setDiscount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   // Get passed data from Cart component
   const location = useLocation();
@@ -107,32 +109,42 @@ const Payment = () => {
   };
 
   const handlePayment = () => {
-    // Get orderId, couponId from localStorage
-    const paymentData = JSON.parse(localStorage.getItem('payment'));
-    if (paymentData) {
-      const { orderId, couponId } = paymentData;
-      
-      // Prepare the data to send to the payment API
-      const paymentRequest = {
-        orderId,
-        couponId,
-        amount: finalPrice,
-        description: orderNote, 
-      };
-
-      // Call the payment API
-      axios.post('https://exe201be.io.vn/api/payment/geturlpayment', paymentRequest)
-        .then((response) => {
-          if (response.data.success) {
-            window.location.href = response.data.data.url;
-          } else {
-            console.error('Payment API failed:', response.data.message);
-          }
-        })
-        .catch((error) => {
-          console.error('Error calling payment API:', error);
-        });
+    // Check if any of the required fields are empty
+    if (!userData.userName || !userData.phoneNumber || !userData.email || !userData.address) {
+      setErrorMessage('Please fill in all the required fields (User Name, Phone, Email, and Address).');
+      setOpenSnackbar(true);
+      return;
     }
+
+    const paymentData = JSON.parse(localStorage.getItem('payment')) || {}; 
+    paymentData.orderNote = orderNote; 
+    localStorage.setItem('payment', JSON.stringify(paymentData)); 
+  
+    const { orderId, couponId } = paymentData;
+  
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+  
+    const paymentRequest = {
+      orderId,
+      couponId: couponId || '',
+      amount: finalPrice,
+      description: orderNote || '',
+      date: formattedDate,
+    };
+  
+    // Call the payment API
+    axios.post('https://exe201be.io.vn/api/payment/geturlpayment', paymentRequest)
+      .then((response) => {
+        if (response.data.success) {
+          window.location.href = response.data.data.url;
+        } else {
+          console.error('Payment API failed:', response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error calling payment API:', error);
+      });
   };
 
   return (
@@ -183,8 +195,8 @@ const Payment = () => {
                     Tổng tiền:
                     <Box component="span">{formatPrice(subtotal)} VNĐ</Box>
                   </Typography>
-                  <Typography variant="body1" sx={{color:'red'}}>Giảm giá: {discount}%</Typography>
-                  <Typography variant="body1" sx={{color:'green'}}>Tổng tiền cuối cùng: {formatPrice(finalPrice)} VNĐ</Typography>
+                  <Typography variant="body1" sx={{ color: 'red' }}>Giảm giá: {discount}%</Typography>
+                  <Typography variant="body1" sx={{ color: 'green' }}>Tổng tiền cuối cùng: {formatPrice(finalPrice)} VNĐ</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -222,9 +234,6 @@ const Payment = () => {
               value={orderNote}
               onChange={(e) => setOrderNote(e.target.value)}
             />
-            <Box mt={2} display="flex" justifyContent="center">
-              <img src={QRCode} alt="QR Code" />
-            </Box>
           </Grid>
 
           <Grid item xs={12}>
@@ -235,16 +244,34 @@ const Payment = () => {
                 <img src={Bank} alt="Bank" width={80} />
               </Box>
             </RadioGroup>
-            <Button
-              type="button"
-              style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#4caf50', color: 'white', border: 'none' }}
-              onClick={handlePayment}
-            >
-              Thanh toán
-            </Button>
+            <Box display="flex" justifyContent="flex-end" marginTop={2}>
+              <Button
+                type="button"
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#4caf50',
+                  color: 'white',
+                  border: 'none',
+                }}
+                onClick={handlePayment}
+              >
+                Thanh toán
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Box>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: 'center', horizontal: 'center' }}
+      >
+        <Alert severity="error" sx={{ width: '100%' }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

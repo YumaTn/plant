@@ -6,8 +6,8 @@ import { CircleIcon } from '../../scss/icon';
 const FAQ = () => {
   const faqs = [
     {
-      question: 'Mâm Xinh có giao hàng tận nơi không?',
-      answer: 'Có, Mâm Xinh cung cấp dịch vụ giao hàng tận nơi cho khách hàng.',
+      question: 'Chồi Xinh có giao hàng tận nơi không?',
+      answer: 'Có, Chồi Xinh cung cấp dịch vụ giao hàng tận nơi cho khách hàng.',
     },
     {
       question: 'Làm sao để chọn cây thích hợp với mình?',
@@ -22,7 +22,7 @@ const FAQ = () => {
       answer: 'Chúng tôi có chính sách đổi trả trong trường hợp sản phẩm gặp vấn đề.',
     },
     {
-      question: 'Mâm xinh có gói quà không?',
+      question: 'Chồi xinh có gói quà không?',
       answer: 'Có, chúng tôi cung cấp dịch vụ gói quà cho sản phẩm.',
     },
   ];
@@ -30,9 +30,9 @@ const FAQ = () => {
   return (
     <Box sx={{ maxWidth: '600px', margin: 'auto', padding: 2 }}>
         <Paper sx={{ padding: 5,borderRadius:2,marginBottom:5 }}>
-        <Typography variant="h6" sx={{marginBottom:2,fontWeight:'bold'}}>Mầm Xinh có giao hàng tận nơi không?</Typography>
+        <Typography variant="h6" sx={{marginBottom:2,fontWeight:'bold'}}>Chồi Xinh có giao hàng tận nơi không?</Typography>
         <Typography variant="body2">
-          Mâm Xinh nhận giao hàng tận nơi đối với tất cả sản phẩm trong nội TPHCM. Tùy vào mỗi khu vực và giá trị đơn hàng sẽ có mức phí ship khác nhau hoặc miễn phí ship. Để biết chi tiết hơn, quý khách vui lòng xem tại "Quy định giao hàng" hoặc có thể liên hệ để chúng mình tư vấn thêm nhé!
+          Chồi Xinh nhận giao hàng tận nơi đối với tất cả sản phẩm trong nội TPHCM. Tùy vào mỗi khu vực và giá trị đơn hàng sẽ có mức phí ship khác nhau hoặc miễn phí ship. Để biết chi tiết hơn, quý khách vui lòng xem tại "Quy định giao hàng" hoặc có thể liên hệ để chúng mình tư vấn thêm nhé!
         </Typography>
       </Paper>
       <Typography variant="h4" align="center" gutterBottom>
