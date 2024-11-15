@@ -89,7 +89,7 @@ const ProductDetail = () => {
                         component="img"
                         image={product.urlImg} // Get image URL from API
                         alt={product.name}
-                        style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                        style={{ width: '100%', height: '400px', borderRadius: '8px' }}
                     />
                 </Grid>
 
