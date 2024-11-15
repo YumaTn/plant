@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,19 +10,48 @@ import Button from '@mui/material/Button';
 import { CartIcon, UserIcon } from '../scss/icon';
 import Products from './Products/Products';
 import Logo from '../scss/Logo.png';
+import axios from 'axios';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [cartItemCount, setCartItemCount] = React.useState(0);
 
-  // Hàm xử lý khi bấm vào UserIcon
-  const handleUserIconClick = () => {
-    // Kiểm tra nếu có dữ liệu đăng nhập trong localStorage
+  const fetchCartData = async () => {
     const userData = localStorage.getItem('userData');
     if (userData) {
-      // Nếu đã đăng nhập, điều hướng đến trang người dùng
+      const token = JSON.parse(userData)?.token;
+      try {
+        const response = await axios.get('https://exe201be.io.vn/api/cart/cartbycurrentuser', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.data.success) {
+          const orderDetails = response.data.data.orderDetails;
+          const totalQuantity = orderDetails.reduce((total, item) => total + item.quantity, 0);
+          setCartItemCount(totalQuantity);
+        } else {
+          setCartItemCount(0);
+        }
+      } catch (error) {
+        setCartItemCount(0);
+        console.error('Error fetching cart data:', error);
+      }
+    } else {
+      setCartItemCount(0);
+    }
+  };
+
+  // Run the fetchCartData function every time the location changes
+  React.useEffect(() => {
+    fetchCartData();
+  }, [location]);
+
+  const handleUserIconClick = () => {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
       navigate('/userlist/user');
     } else {
-      // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập
       navigate('/signin');
     }
   };
@@ -46,6 +75,23 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <IconButton component={Link} to="/cart">
               <CartIcon />
+              {cartItemCount > 0 && (
+                <Typography
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                    color: 'white',
+                    backgroundColor: 'red',
+                    borderRadius: '50%',
+                    padding: '2px 6px',
+                  }}
+                >
+                  {cartItemCount}
+                </Typography>
+              )}
             </IconButton>
             <IconButton onClick={handleUserIconClick} sx={{ marginLeft: 5, marginRight: 5 }}>
               <UserIcon />

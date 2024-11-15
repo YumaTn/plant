@@ -13,18 +13,25 @@ export default function BrowsingHistory() {
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN');
   };
+
   // Fetch data from the first API to get the product IDs
   useEffect(() => {
     // Get token from localStorage
     const tokenData = JSON.parse(localStorage.getItem('userData')) || {};
     const token = tokenData.token;
 
-    axios.get('https://exe201be.io.vn/api/cart/cartbycurrentuser', {
+    axios.post('https://exe201be.io.vn/api/order/allordercurrenuser', {
+      orderId: '',
+      pageNum: 1,
+      pageSize: 999,
+      status: 2
+    },{
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         if (response.data.success) {
-          const orderDetails = response.data.data.orderDetails || [];
+          const orderDetails = response.data.data.pageData.map(order => order.orderDetails).flat() || [];
+          console.log(orderDetails)
           const productIds = orderDetails.map(order => order.productId); // Extract productIds
 
           // Fetch product data for each productId

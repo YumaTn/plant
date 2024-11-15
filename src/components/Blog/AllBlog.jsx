@@ -68,7 +68,7 @@ const AllBlog = () => {
                     WebkitBoxOrient: 'vertical', 
                     overflowY: 'hidden', 
                     maxHeight: '40px',
-                    lineClamp: 2,
+                    WebkitLineClamp: 1,
                   }}
                 >
                   {blog.description}

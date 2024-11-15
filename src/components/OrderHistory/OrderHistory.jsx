@@ -9,24 +9,47 @@ function OrderHistory() {
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN');
   };
-  useEffect(() => {
-    // Get token from localStorage or wherever it is stored
-    const tokenData = JSON.parse(localStorage.getItem('userData')) || {};
-    const token = tokenData.token;
 
-    // Fetch order data from the API
-    axios.get('https://exe201be.io.vn/api/cart/cartbycurrentuser', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        if (response.data.success) {
-          const orderData = response.data.data.orderDetails || [];
-          setOrders(orderData);
+  const getTokenFromStorage = () => {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        return JSON.parse(userData).token;
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+        return null;
+      }
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const token = getTokenFromStorage();
+
+    if (token) {
+      axios.post('https://exe201be.io.vn/api/order/allordercurrenuser', {
+        orderId: '',
+        pageNum: 1,
+        pageSize: 999,
+        status: 2
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       })
-      .catch(error => {
-        console.error('Error fetching order history:', error);
+      .then((response) => {
+        if (response.data.success) {
+          setOrders(response.data.data.pageData);
+        } else {
+          console.error('Error fetching data:', response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
       });
+    } else {
+      console.error('No token found in localStorage');
+    }
   }, []);
 
   return (
@@ -45,11 +68,11 @@ function OrderHistory() {
           <TableBody>
             {orders.map((order, index) => (
               <TableRow key={order.id + index}> {/* Ensure unique key */}
-                <TableCell component="th" scope="row">{order.orderId}</TableCell>
-                <TableCell align="center">{order.productName || 'N/A'}</TableCell>
-                <TableCell align="center">{order.date || 'N/A'}</TableCell>
-                <TableCell align="center">{order.quantity || 'N/A'}</TableCell>
-                <TableCell align="center">{formatPrice(order.price) } VNĐ</TableCell>
+                <TableCell component="th" scope="row">{order.id}</TableCell>
+                <TableCell align="center">{order.orderDetails[0].productName}</TableCell>
+                <TableCell align="center">{order.date}</TableCell>
+                <TableCell align="center">{order.orderDetails[0].quantity || 'N/A'}</TableCell>
+                <TableCell align="center">{formatPrice(order.orderDetails[0].price) } VNĐ</TableCell>
               </TableRow>
             ))}
           </TableBody>

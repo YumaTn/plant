@@ -74,32 +74,32 @@ const UserDashboard = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{fontWeight: 'bold', color: '#333'}}>
         Số lượng người dùng
       </Typography>
       <BarChart
         {...chartProps}
         series={[
           {
-            data: [userData, staffData],  // Dữ liệu riêng biệt cho User và Staff
+            data: [userData, staffData], 
             label: 'Vai trò', 
-            color: ['#4caf50'],  // Màu sắc cho User (xanh lá) và Staff (cam)
+            color: ['#4caf50'], 
           },
         ]}
       />
       
       {/* Hiển thị tổng số người dùng với màu xanh */}
-      <Typography variant="h6" sx={{ mt: 3, color: 'green' }}>
+      <Typography variant="h6" sx={{ color: 'green' }}>
         Tổng người dùng: {userData}
       </Typography>
       
       {/* Hiển thị tổng số nhân viên với màu cam */}
-      <Typography variant="h6" sx={{ mt: 1, color: 'orange' }}>
+      <Typography variant="h6" sx={{  color: 'orange' }}>
         Tổng nhân viên: {staffData}
       </Typography>
 
       {/* Hiển thị tổng số người dùng và nhân viên */}
-      <Typography variant="h6" sx={{ mt: 1 }}>
+      <Typography variant="h6" >
         Tổng người dùng và nhân viên: {totalUsersAndStaff}
       </Typography>
     </Box>

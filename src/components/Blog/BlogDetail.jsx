@@ -64,9 +64,6 @@ const BlogDetail = () => {
       <Divider sx={{ my: 3 }} />
 
       <Box component="footer">
-        <Typography variant="h5" component="h2" sx={{ color: '#333' }}>
-          Conclusion
-        </Typography>
         <Typography paragraph>
           {blogDetail.description}
         </Typography>

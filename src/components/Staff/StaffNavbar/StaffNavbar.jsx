@@ -191,12 +191,6 @@ export default function StaffNavbar() {
               <ListItemText primary="Sản phẩm" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/staff/follow', 2)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton sx={{ backgroundColor: selectedIndex === 2 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
-              <ListItemIcon><ReceiptIcon /></ListItemIcon>
-              <ListItemText primary="Theo dõi sản phẩm" />
-            </ListItemButton>
-          </ListItem>
           <ListItem button onClick={() => handleNavigation('/staff/profile', 3)} disablePadding sx={{ display: 'block' }}>
             <ListItemButton sx={{ backgroundColor: selectedIndex === 3 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
               <ListItemIcon><AccountCircleIcon /></ListItemIcon>

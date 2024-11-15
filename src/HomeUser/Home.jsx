@@ -151,15 +151,8 @@ const Home = () => {
             >
               At Choi Xinh, we take pride in providing personalized plant recommendations that cater to your unique lifestyle and preferences. Our expert horticulturists will carefully consider your personality traits, interests, living space, and schedule to curate a selection of plants that perfectly complement your home and enhance your well-being.
               <br /><br />
-              <Typography sx={{ color: 'red' }}>
-                *Service only available in Vinhomes Grand Park
-              </Typography>
             </Typography>
-            <Link to='/shop' component={Link}>
-              <Button sx={{ marginLeft: 30, marginTop: 10, backgroundColor: 'green', color: 'white' }} variant="contained" size="large">
-                Order Now
-              </Button>
-            </Link>
+            
           </Grid>
 
           <Grid item xs={12} md={6}>
