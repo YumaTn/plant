@@ -30,19 +30,32 @@ const Navbar = () => {
           const orderDetails = response.data.data.orderDetails;
           const totalQuantity = orderDetails.reduce((total, item) => total + item.quantity, 0);
           setCartItemCount(totalQuantity);
+          return totalQuantity > 0; // Return true if there are items in the cart
         } else {
           setCartItemCount(0);
+          return false; // Return false if the cart is empty
         }
       } catch (error) {
         setCartItemCount(0);
         console.error('Error fetching cart data:', error);
+        return false; // Return false if there was an error
       }
     } else {
       setCartItemCount(0);
+      return false; // Return false if no user data is available
     }
   };
 
-  // Run the fetchCartData function every time the location changes
+  // Function to handle click and navigate to the correct page
+  const handleClick = async () => {
+    const hasItemsInCart = await fetchCartData();
+    if (hasItemsInCart) {
+      navigate('/cart'); // Navigate to /cart if there are items
+    } else {
+      navigate('/cart/empty'); // Navigate to /cart/empty if the cart is empty
+    }
+  };
+
   React.useEffect(() => {
     fetchCartData();
   }, [location]);
@@ -73,7 +86,7 @@ const Navbar = () => {
             </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <IconButton component={Link} to="/cart">
+            <IconButton onClick={handleClick}>
               <CartIcon />
               {cartItemCount > 0 && (
                 <Typography
