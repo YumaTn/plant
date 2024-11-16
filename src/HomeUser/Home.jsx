@@ -143,13 +143,13 @@ const Home = () => {
           {/* Text Section on the Left */}
           <Grid item xs={12} md={6}>
             <Typography variant="h2" gutterBottom>
-              Personality-based Plant Selection Consultation
+              Tư vấn lựa chọn cây theo tính cách
             </Typography>
             <Typography
               variant="body1"
               sx={{ marginBottom: '30px', maxWidth: '600px', margin: '0 auto' }}
             >
-              At Choi Xinh, we take pride in providing personalized plant recommendations that cater to your unique lifestyle and preferences. Our expert horticulturists will carefully consider your personality traits, interests, living space, and schedule to curate a selection of plants that perfectly complement your home and enhance your well-being.
+              Tại Choi Xinh, chúng tôi tự hào cung cấp các khuyến nghị về cây trồng được cá nhân hóa phù hợp với lối sống và sở thích độc đáo của bạn. Các chuyên gia làm vườn của chúng tôi sẽ cân nhắc kỹ lưỡng các đặc điểm tính cách, sở thích, không gian sống và lịch trình của bạn để lựa chọn một số loại cây phù hợp hoàn hảo với ngôi nhà của bạn và tăng cường sức khỏe của bạn.
               <br /><br />
             </Typography>
             
@@ -173,7 +173,7 @@ const Home = () => {
       {/* Celebs You Love Section */}
       <Box sx={{ padding: '50px 0', textAlign: 'center', backgroundColor: '#ffffff' }}>
         <Typography variant="h2" gutterBottom>
-          Celebs You Love, Love Us
+        Trang trí theo cách của bạn
         </Typography>
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
