@@ -31,7 +31,9 @@ const MoneyDashboard = () => {
         orders.forEach((order) => {
           const date = new Date(order.date);
           const month = date.getMonth(); // Lấy tháng (0 - 11)
-          if (!isNaN(month)) {
+
+          // Loại bỏ các đơn hàng có ngày đặt là `1/1/1`
+          if (!isNaN(month) && date.toLocaleDateString('vi-VN') !== '1/1/1') {
             revenueByMonth[month] += order.totalPrice;
             total += order.totalPrice; // Cộng vào tổng doanh thu
           }
