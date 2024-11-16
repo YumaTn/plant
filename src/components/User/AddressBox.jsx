@@ -20,17 +20,17 @@ export default function FolderList() {
   useEffect(() => {
     const fetchBuildingInfo = async () => {
       try {
-        const userData = JSON.parse(localStorage.getItem('userData')); // Lấy dữ liệu từ localStorage
-        const { userId, token } = userData; // Giả sử id và token đã được lưu trong userData
+        const userData = JSON.parse(localStorage.getItem('userData')); 
+        const { userId, token } = userData; 
         const response = await axios.get(`https://exe201be.io.vn/api/user/${userId}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Gửi token trong header
+            Authorization: `Bearer ${token}`, 
           },
         });
         const { userName, address, email, phoneNumber } = response.data.data;
         setBuildingInfo({
           
-          userName: userName || '', // Nếu không có, để trống
+          userName: userName || '',
           address: address || '',
           email: email || '',
           phoneNumber: phoneNumber || '',
@@ -46,7 +46,7 @@ export default function FolderList() {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', marginLeft: 2, borderRadius: '1px solid black', marginRight: 1 }}>
       <nav aria-label="main mailbox folders">
-        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 550, textAlign: 'start', padding: 1, marginLeft: 2 }}>BUILDING ADDRESS</Typography>} />
+        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 550, textAlign: 'start', padding: 1, marginLeft: 2 }}>Thông tin địa chỉ</Typography>} />
       </nav>
       <Divider />
       <ListItem>

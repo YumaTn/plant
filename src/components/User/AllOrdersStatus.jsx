@@ -18,7 +18,7 @@ export default function FolderList() {
         <ListItemAvatar sx={{marginRight:2}}>
             <TotalOrdersIcon/>
         </ListItemAvatar>
-        <ListItemText primary="Photos" secondary="Jan 9, 2014" />
+        <ListItemText primary="Photos"/>
       </ListItem>
     </List>
     <List sx={{ width: '672px', maxWidth: 360, bgcolor: '#FFF3EB',marginBottom:'24px' }}>
@@ -26,7 +26,7 @@ export default function FolderList() {
         <ListItemAvatar sx={{marginRight:2}}>
             <PendingOrdersIcon/>
         </ListItemAvatar>
-        <ListItemText primary="Work" secondary="Jan 7, 2014" />
+        <ListItemText primary="Work" />
       </ListItem>
     </List>
     <List sx={{ width: '672px', maxWidth: 360, bgcolor: '#EAF7E9' }}>
@@ -34,7 +34,7 @@ export default function FolderList() {
         <ListItemAvatar sx={{marginRight:2}}    >
             <CompletedOrdersIcon/>
         </ListItemAvatar>
-        <ListItemText primary="Vacation" secondary="July 20, 2014" />
+        <ListItemText primary="Vacation"/>
       </ListItem>
     </List>
     </Box>
