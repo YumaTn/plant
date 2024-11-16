@@ -90,7 +90,7 @@ export default function CustomizedMenus() {
         }}
         onMouseEnter={handleMouseEnterButton}
       >
-        Products
+        Sản phẩm
       </CustomButton>
       <StyledMenu
         id="demo-customized-menu"

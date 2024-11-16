@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 const CategoryHome = () => {
   return (
     <>
-    <Box sx={{ position: 'relative',display:'flex',justifyContent: 'center' }}>
+    <Box sx={{ position: 'relative',display:'flex',justifyContent: 'center',marginBottom:5,marginTop:5 }}>
     <Link 
         component={Link}
         to="/bonsai"
@@ -108,18 +108,7 @@ const CategoryHome = () => {
     </Box>
     </Link>
 </Box>
-<Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '20px 0',marginRight:12 }}>
-        <Link 
-          component={Link}
-          to="/bestselling"
-          style={{ textDecoration: 'none', color: 'gray' }}
-        >
-          <Typography sx={{ color: 'gray', display: 'flex', alignItems: 'center' }}>
-            View all
-            <ArrowForwardIcon sx={{ marginLeft: 0.5, color: 'gray' }} />
-          </Typography>
-        </Link>
-      </Box>
+
  </>
   )
 }

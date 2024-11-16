@@ -114,22 +114,14 @@ const ProductDetail = () => {
                             />
                         </FormControl>
 
-                        {/* Include Planter Field */}
-                        <FormControl fullWidth style={{ marginBottom: '30px' }}>
-                            <InputLabel sx={{ top: -5, left: -14 }}>Include Planter</InputLabel>
-                            <Select value={includePlanter} onChange={(e) => setIncludePlanter(e.target.value)}>
-                                <MenuItem value="yes">Yes</MenuItem>
-                                <MenuItem value="no">No</MenuItem>
-                            </Select>
-                        </FormControl>
-
+                
                         <Button
                             variant="contained"
                             fullWidth
                             sx={{ backgroundColor: '#3B823E', '&:hover': { backgroundColor: '#336E34' } }}
                             onClick={handleAddToCart} // Trigger Add to Cart
                         >
-                            Add to Cart
+                            Thêm vào giỏ hàng
                         </Button>
                     </Box>
 
@@ -159,33 +151,30 @@ const ProductDetail = () => {
                 {/* Care Guide Breadcrumb */}
                 <Breadcrumbs separator="-" aria-label="breadcrumb" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
                     <Typography color="inherit" sx={{fontWeight:'bold'}}>
-                        Care Guide
+                        Hướng dẫn chăm sóc
                     </Typography>
                 </Breadcrumbs>
                 <Typography variant="subtitle1" style={{ marginBottom: '10px' }}>
-                    <strong>Ingredients:</strong> {product.ingredient}
+                    <strong>Thành phần:</strong> {product.ingredient}
                 </Typography>
 
                 {/* Plant Bio Breadcrumb */}
                 <Breadcrumbs separator="-" aria-label="breadcrumb" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
-                    <Typography color="inherit" sx={{fontWeight:'bold'}}>
-                        Plant Bio
-                    </Typography>
                 </Breadcrumbs>
                 <Typography variant="subtitle1" style={{ marginBottom: '10px' }}>
-                    <strong>User Manual:</strong> {product.userManual}
+                    <strong>Hướng dẫn sử dụng:</strong> {product.userManual}
                 </Typography>
                 <Typography variant="subtitle1" style={{ marginBottom: '10px' }}>
-                    <strong>Warranty Policy:</strong> {product.warrantyPolicy}
+                    <strong>Chính sách bảo hành:</strong> {product.warrantyPolicy}
                 </Typography>
                 <Typography variant="subtitle1" style={{ marginBottom: '10px' }}>
-                    <strong>Story:</strong> {product.story}
+                    <strong>Câu chuyện:</strong> {product.story}
                 </Typography>
 
                 {/* Reviews Breadcrumb */}
                 <Breadcrumbs separator="-" aria-label="breadcrumb" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
                     <Typography color="inherit" sx={{fontWeight:'bold'}}>
-                        Reviews
+                        Đánh giá
                     </Typography>
                 </Breadcrumbs>
             </Box>

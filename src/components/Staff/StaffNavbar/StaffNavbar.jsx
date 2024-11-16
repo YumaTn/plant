@@ -137,15 +137,17 @@ export default function StaffNavbar() {
   const getTitle = () => {
     switch (location.pathname) {
       case '/staff/product':
-        return 'Product';
+        return 'Sản phẩm';
       case '/staff/profile':
-        return 'Profile';
+        return 'Thông tin người dùng';
       case '/staff/follow':
         return 'Theo dõi sản phẩm';
       case '/staff':
-        return 'Dashboard';
+        return 'Dữ liệu';
       case '/staff/edit/:id':
-        return 'Dashboard';
+        return 'Sửa sản phẩm';
+        case '/staff/order':
+        return 'Sản phẩm đã bán';
       default:
         return '';
     }
@@ -184,14 +186,14 @@ export default function StaffNavbar() {
               <ListItemText primary="Dashboard" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/staff/order', 2)} disablePadding sx={{ display: 'block' }}>
+          <ListItem button onClick={() => handleNavigation('/staff/order', 1)} disablePadding sx={{ display: 'block' }}>
             <ListItemButton sx={{ backgroundColor: selectedIndex === 1 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
               <ListItemIcon><ReceiptLongIcon /></ListItemIcon>
               <ListItemText primary="Sản phẩm đã bán" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/staff/product', 1)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton sx={{ backgroundColor: selectedIndex === 1 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
+          <ListItem button onClick={() => handleNavigation('/staff/product', 2)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 2 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
               <ListItemIcon><CategoryIcon /></ListItemIcon>
               <ListItemText primary="Sản phẩm" />
             </ListItemButton>

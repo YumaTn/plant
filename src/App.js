@@ -44,6 +44,7 @@ import CreateProduct from './components/Staff/ProductStaffAndAdmin/CreateProduct
 import PaymentSuccess from './components/Cart/PaymentSuccess';
 import AdminCreateBlog from './components/Admin/AdminPage/AdminCreateBlog';
 import AdminOrder from './components/Admin/AdminPage/AdminOrder';
+import ReturnHome from './components/Cart/ReturnHome';
 
 const clientId="428558537254-k9petgo1lqik4aldtokef39jeibi57l4.apps.googleusercontent.com"
 function App() {
@@ -91,7 +92,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/cart" element={<Cart />} />
-
+          <Route path="/cart/empty" element={<ReturnHome />} />
           <Route path="/blogdetail/:id" element={<BlogDetail />} />
           <Route path="/productdetail/:id" element={<ProductDetail />} />
 

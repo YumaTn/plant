@@ -151,22 +151,22 @@ const Payment = () => {
     <>
       <Box padding={3} bgcolor="#f9f9f9" maxWidth={1000} boxShadow={2} borderRadius={2} margin="0 auto" marginTop={5}>
         <Typography variant="h4" align="center" gutterBottom>
-          Your Cart Items
+          Chi tiết giỏ hàng của bạn
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Grid container justifyContent="center">
               <Grid item xs={2}>
-                <Typography variant="h6">Product</Typography>
+                <Typography variant="h6">Sản phẩm</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography variant="h6">Price</Typography>
+                <Typography variant="h6">Giá</Typography>
               </Grid>
               <Grid item xs={4}>
-                <Typography variant="h6" sx={{ textAlign: 'center' }}>Quantity</Typography>
+                <Typography variant="h6" sx={{ textAlign: 'center' }}>Số lượng</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography variant="h6">Total</Typography>
+                <Typography variant="h6">Tổng</Typography>
               </Grid>
             </Grid>
 
@@ -207,27 +207,27 @@ const Payment = () => {
       <Box sx={{ maxWidth: 1000, mx: 'auto', p: 3, bgcolor: '#f9f9f9', boxShadow: 2, borderRadius: 2, marginTop: 5 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6" gutterBottom>Billing Details</Typography>
+            <Typography variant="h6" gutterBottom>Địa chỉ</Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField label="User Name" value={userData.userName} fullWidth disabled />
+                <TextField label="Họ và tên" value={userData.userName} fullWidth disabled />
               </Grid>
               <Grid item xs={12}>
-                <TextField label="Phone" value={userData.phoneNumber} fullWidth disabled />
+                <TextField label="Số điện thoại" value={userData.phoneNumber} fullWidth disabled />
               </Grid>
               <Grid item xs={12}>
-                <TextField label="Email Address" value={userData.email} fullWidth disabled />
+                <TextField label="Email" value={userData.email} fullWidth disabled />
               </Grid>
               <Grid item xs={12}>
-                <TextField label="Street Address" value={userData.address} fullWidth disabled />
+                <TextField label="Địa chỉ" value={userData.address} fullWidth disabled />
               </Grid>
             </Grid>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Typography sx={{ marginBottom: 2 }}>Order Note (optional)</Typography>
+            <Typography sx={{ marginBottom: 2 }}>Ghi chú</Typography>
             <TextField
-              label="Order notes (optional)"
+              label=""
               fullWidth
               multiline
               rows={3}
@@ -237,7 +237,7 @@ const Payment = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="h6" gutterBottom>Payment method</Typography>
+            <Typography variant="h6" gutterBottom>Phương thức thanh toán</Typography>
             <RadioGroup row value={selectedPaymentMethod} onChange={handlePaymentChange}>
               <Box display="flex" flexDirection="column" alignItems="center" marginRight={2}>
                 <Radio value="bank" sx={{ '&.Mui-checked': { color: '#4caf50' } }} />

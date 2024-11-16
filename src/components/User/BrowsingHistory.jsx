@@ -102,7 +102,7 @@ export default function BrowsingHistory() {
         }}
       >
         <Typography sx={{ fontWeight: 500, padding: 1 }}>
-          BROWSING HISTORY
+          Đã mua gần đây
         </Typography>
       </Box>
 

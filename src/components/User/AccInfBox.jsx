@@ -78,7 +78,7 @@ export default function FolderList() {
                 marginTop: 2,
               }}
             >
-              EDIT ACCOUNT
+              Sửa thông tin người dùng
             </Button>
           </Link>
         </Box>
