@@ -170,44 +170,6 @@ const Home = () => {
         </Grid>
       </Box>
 
-      {/* Testimonials Section */}
-      <Box sx={{ padding: '50px 0', textAlign: 'center', backgroundColor: '#f5f5f5' }}>
-        <Typography variant="h2" gutterBottom>
-          What Our Customers Say
-        </Typography>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-            <CircularProgress />
-          </Box>
-        ) : error ? (
-          <Alert severity="error">Error: {error.message}</Alert>
-        ) : (
-          <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '20px' }}>
-            {testimonials.map((testimonial) => (
-              <Grid item key={testimonial.id}>
-                <Card sx={{ width: 250, borderRadius: '10px', boxShadow: 3 }}>
-                  <CardMedia
-                    component="img"
-                    image={testimonial.person}
-                    alt={testimonial.name}
-                    sx={{ height: 200, objectFit: 'cover' }}
-                    loading="lazy"
-                  />
-                  <CardContent sx={{ textAlign: 'center' }}>
-                    <Typography variant="h6" gutterBottom>
-                      {testimonial.name}
-                    </Typography>
-                    <Typography variant="body2">
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        )}
-      </Box>
-
       {/* Celebs You Love Section */}
       <Box sx={{ padding: '50px 0', textAlign: 'center', backgroundColor: '#ffffff' }}>
         <Typography variant="h2" gutterBottom>

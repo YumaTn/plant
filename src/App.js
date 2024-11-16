@@ -43,6 +43,7 @@ import StaffDashboard from './components/Staff/Staff/StaffDashboard';
 import CreateProduct from './components/Staff/ProductStaffAndAdmin/CreateProduct';
 import PaymentSuccess from './components/Cart/PaymentSuccess';
 import AdminCreateBlog from './components/Admin/AdminPage/AdminCreateBlog';
+import AdminOrder from './components/Admin/AdminPage/AdminOrder';
 
 const clientId="428558537254-k9petgo1lqik4aldtokef39jeibi57l4.apps.googleusercontent.com"
 function App() {
@@ -61,6 +62,7 @@ function App() {
           <Routes>
             <Route path="/admin" element={<Admin/>}>
             <Route path="/admin" element={<AdminDashboard/>} />
+            <Route path="order" element={<AdminOrder/>}/>
             <Route path="blog" element={<AdminBlog/>} />
             <Route path="product" element={<AdminProduct/>} />
             <Route path="manageUser" element={<AdminMangeUser/>} />
@@ -78,6 +80,7 @@ function App() {
             <Route path="profile" element={<StaffProfile />} />
             <Route path="edit/:id" element={<EditProduct />} />
             <Route path="create" element={<CreateProduct />} />
+            <Route path="order" element={<AdminOrder/>}/>
           </Route>
         </Routes>
 

@@ -20,9 +20,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CategoryIcon from '@mui/icons-material/Category';
-import ReceiptIcon from '@mui/icons-material/Receipt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -183,6 +182,12 @@ export default function StaffNavbar() {
             <ListItemButton sx={{ backgroundColor: selectedIndex === 0 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
               <ListItemIcon><DashboardIcon /></ListItemIcon>
               <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/staff/order', 2)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton sx={{ backgroundColor: selectedIndex === 1 ? '#FA8232' : 'transparent', '&:hover': { backgroundColor: '#FA8232' } }}>
+              <ListItemIcon><ReceiptLongIcon /></ListItemIcon>
+              <ListItemText primary="Sản phẩm đã bán" />
             </ListItemButton>
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/staff/product', 1)} disablePadding sx={{ display: 'block' }}>

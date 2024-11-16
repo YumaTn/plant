@@ -35,6 +35,36 @@ const AdminBlog = () => {
     fetchBlogs();
   }, [currentPage]);
 
+  const handleDeleteBlog = async (id) => {
+    const token = JSON.parse(localStorage.getItem('userData'))?.token; // Lấy token từ localStorage
+    if (!token) {
+      console.error("Missing authentication token");
+      return;
+    }
+  
+    const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa bài blog này?");
+    if (!confirmDelete) return; // Hủy nếu người dùng không xác nhận
+  
+    try {
+      const response = await axios.post(`https://exe201be.io.vn/api/blogs/detele/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.data.success) {
+        // Cập nhật danh sách blogs
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
+        console.log("Blog deleted successfully");
+      } else {
+        console.error("Failed to delete blog");
+      }
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+    }
+  };
+  
+
   const handleCreateBlog = () => {
     navigate(`/admin/blog/create`);
   };
@@ -108,6 +138,7 @@ const AdminBlog = () => {
                 transition: 'opacity 0.3s ease, transform 0.3s ease',
                 color: '#fff', // Màu trắng cho icon
               }}
+              onClick={() => handleDeleteBlog(blog.id)}
             >
               <DeleteIcon fontSize="large" />
             </IconButton>

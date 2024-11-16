@@ -23,6 +23,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import BookIcon from '@mui/icons-material/Book';
 import GroupIcon from '@mui/icons-material/Group';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 const drawerWidth = 240;
 
@@ -186,6 +187,12 @@ export default function AdminNavbar() {
             <ListItemButton selected={selectedIndex === 0} sx={{ backgroundColor: selectedIndex === 0 ? '#D9D9D9' : 'transparent' }}>
               <ListItemIcon><DashboardIcon /></ListItemIcon>
               <ListItemText primary="Dữ liệu" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem button onClick={() => handleNavigation('/admin/order', 2)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 2} sx={{ backgroundColor: selectedIndex === 2 ? '#D9D9D9' : 'transparent' }}>
+              <ListItemIcon><ReceiptLongIcon /></ListItemIcon>
+              <ListItemText primary="Sản phẩm đã bán" />
             </ListItemButton>
           </ListItem>
           <ListItem button onClick={() => handleNavigation('/admin/product', 1)} disablePadding sx={{ display: 'block' }}>
