@@ -37,7 +37,7 @@ export default function HistoryOrderPre() {
         orderId: '',
         pageNum: 1,
         pageSize: 999,
-        status: 0
+        status: 2
       }, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -80,7 +80,7 @@ export default function HistoryOrderPre() {
         <Link to="/userlist/orderhistory" style={{ textDecoration: 'none' }}>
           <Box display="flex" alignItems="center">
             <Typography variant="body2" color="#FA8232" sx={{ textDecoration: 'none' }}>
-              View All
+              Xem tất cả
             </Typography>
             <ArrowForwardIcon sx={{ marginLeft: 0.5, color: '#FA8232' }} />
           </Box>

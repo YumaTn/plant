@@ -47,11 +47,9 @@ const NameAndNote = () => {
           Hello, {buildingInfo.userName}
         </Typography>
         <Typography>
-        From your account dashboard. you can easily check & view your
+        Từ Dashboard của bạn bạn có thể xem được thông tin cá nhân
         <br/>
-        Recent Orders, manage your Billing Addresses and
-        <br/>
-        edit your Password and Account Details.
+        Giao dịch gần đây, quản lý địa chỉ và chỉnh sửa thông tin cá nhân
         </Typography></>
   )
 }
