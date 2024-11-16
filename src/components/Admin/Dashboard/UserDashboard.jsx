@@ -65,7 +65,7 @@ const UserDashboard = () => {
 
   const chartProps = {
     width: 500,
-    height: 300,
+    height: 400,
     xAxis: [{ data: ['User', 'Staff'], scaleType: 'band' }],
   };
 

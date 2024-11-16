@@ -31,6 +31,35 @@ const AdminOrder = () => {
         fetchOrders();
     }, [currentPage]);
 
+    // Nhóm đơn hàng theo `orderId`
+    const groupedOrders = orders
+        .filter(order => new Date(order.date).toLocaleDateString('vi-VN') !== '1/1/1') // Lọc các dòng có ngày hợp lệ
+        .reduce((acc, order) => {
+            const { id, userName, couponId, date, orderDetails } = order;
+
+            // Tính tổng giá cho orderId
+            const totalPrice = orderDetails.reduce((sum, detail) => sum + detail.price * detail.quantity, 0);
+
+            // Nếu chưa có, khởi tạo
+            if (!acc[id]) {
+                acc[id] = {
+                    id,
+                    userName,
+                    couponId,
+                    date,
+                    totalPrice,
+                    products: [],
+                };
+            }
+
+            // Gom tất cả sản phẩm vào `products`
+            acc[id].products.push(...orderDetails);
+
+            return acc;
+        }, {});
+
+    const displayedOrders = Object.values(groupedOrders);
+
     return (
         <Box sx={{ p: 3 }}>
             <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
@@ -52,33 +81,30 @@ const AdminOrder = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {orders
-                            .filter(
-                                (order) =>
-                                    new Date(order.date).toLocaleDateString('vi-VN') !== '1/1/1'
-                            ) // Lọc các dòng có ngày hợp lệ
-                            .map((order) => (
-                                <React.Fragment key={order.id}>
-                                    {order.orderDetails.map((detail, index) => (
-                                        <TableRow key={`${order.id}-${index}`}>
-                                            <TableCell >{order.id}</TableCell>
-                                            <TableCell >{order.userName}</TableCell>
-                                            <TableCell >
-                                                {order.couponId === "DEFAULT" ? "Không có mã giảm giá" : order.couponId}
-                                            </TableCell>
-                                            <TableCell sx={{ color: 'red' }}>{order.totalPrice.toLocaleString('vi-VN')} VNĐ</TableCell>
-                                            <TableCell >
-                                                {new Date(order.date).toLocaleDateString('vi-VN')}
-                                            </TableCell>
-                                            <TableCell sx={{ color: 'brown' }}>{detail.productName}</TableCell>
-                                            <TableCell sx={{ color: 'teal' }}>{detail.quantity}</TableCell>
-                                        </TableRow>
+                        {displayedOrders.map((order) => (
+                            <TableRow key={order.id}>
+                                <TableCell >{order.id}</TableCell>
+                                <TableCell sx={{ color: 'green' }}>{order.userName}</TableCell>
+                                <TableCell >
+                                    {order.couponId === "DEFAULT" ? "Không có mã giảm giá" : order.couponId}
+                                </TableCell>
+                                <TableCell sx={{ color: 'red' }}>{order.totalPrice.toLocaleString('vi-VN')} VNĐ</TableCell>
+                                <TableCell >
+                                    {new Date(order.date).toLocaleDateString('vi-VN')}
+                                </TableCell>
+                                <TableCell sx={{ color: 'brown' }}>
+                                    {order.products.map((product, index) => (
+                                        <Typography key={index}>{product.productName}</Typography>
                                     ))}
-                                </React.Fragment>
-                            ))}
+                                </TableCell>
+                                <TableCell sx={{ color: 'teal' }}>
+                                    {order.products.map((product, index) => (
+                                        <Typography key={index}>{product.quantity}</Typography>
+                                    ))}
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
-
-
                 </Table>
             </TableContainer>
 
