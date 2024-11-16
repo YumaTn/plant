@@ -59,8 +59,8 @@ const MoneyDashboard = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
-        Tổng tiền thu (Đơn vị: trăm nghìn VNĐ)
+      <Typography variant="h4" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#333' }}>
+        Tổng tiền thu
       </Typography>
       <Box sx={{ width: '100%', maxWidth: 800 }}>
         <ResponsiveChartContainer
@@ -92,12 +92,12 @@ const MoneyDashboard = () => {
         >
           <LinePlot />
           <ChartsXAxis axisId="months" label="Tháng trong năm 2024" labelFontSize={18} />
-          <ChartsYAxis axisId="money" position="left" label="Doanh thu (trăm nghìn VNĐ)" />
+          <ChartsYAxis axisId="money" position="left" />
         </ResponsiveChartContainer>
       </Box>
       {/* Hiển thị tổng tiền */}
       <Typography variant="h6" align="center" sx={{ mt: 3, fontWeight: 'bold', color: 'green' }}>
-        Tổng tiền thu trong năm: {Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalRevenue)}
+        Tổng tiền thu trong năm: {Intl.NumberFormat('vi-VN', { currency: 'VND' }).format(totalRevenue)} VNĐ
       </Typography>
     </Box>
   );
