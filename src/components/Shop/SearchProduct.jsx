@@ -11,9 +11,9 @@ const SearchProduct = ({searchTerm, setSearchTerm, handleSearch}) => {
           id="filled-search"
           type="search"
           variant="outlined"
-          placeholder="Search for plant"
+          placeholder=""
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // Update the search term on input change
+          onChange={(e) => setSearchTerm(e.target.value)} 
           sx={{
             border: 'black solid 1px',
             borderRadius: '20px',

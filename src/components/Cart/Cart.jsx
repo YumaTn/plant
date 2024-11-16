@@ -144,7 +144,7 @@ const Cart = () => {
       <Grid item xs={12} md={7}>
         <Paper sx={{ padding: 2, height: '100%', borderColor: '1px solid black' }}>
           <Typography variant="h6" sx={{ borderBottom: '1px solid #ccc', paddingBottom: 1 }}>
-            Shopping Cart
+            Giỏ hàng
           </Typography>
           {cartItems.map((item, index) => (
             <Grid container spacing={1} sx={{ marginTop: 2 }} alignItems="center" key={index}>
@@ -210,7 +210,7 @@ const Cart = () => {
               sx={{ color: 'black', borderColor: 'black' }}
               onClick={() => navigate(-1)}
             >
-              Return to Shop
+              Về cửa hàng
             </Button>
           </Grid>
         </Paper>
@@ -240,24 +240,24 @@ const Cart = () => {
                 }}
               >
                 <Button variant="contained" sx={{ marginTop: 2, backgroundColor: 'green', width: '100%' }}>
-                  Proceed to Checkout
+                  Sang trang thanh toán
                 </Button>
               </Link>
             </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper sx={{ padding: 2, marginTop: 2 }}>
-              <Typography variant="h6">Coupon Code</Typography>
+              <Typography variant="h6">Mã giảm giá</Typography>
               <TextField
                 variant="outlined"
                 fullWidth
-                placeholder="Coupon (not required)"
+                placeholder="Mã giảm giá"
                 sx={{ marginTop: 1 }}
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
               />
               <Button variant="contained" sx={{ marginTop: 1, backgroundColor: 'green', width: '100%' }} onClick={handleApplyCoupon}>
-                Apply Coupon
+                Xác nhận mã giảm giá
               </Button>
             </Paper>
           </Grid>

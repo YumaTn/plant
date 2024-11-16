@@ -66,7 +66,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'space-evenly' }}>
             <Products />
             <Button component={Link} to="/shop/AllProduct" sx={{ my: 2, color: 'black', display: 'block', marginLeft: 4 }}>
-              Shop
+              Cửa hàng
             </Button>
             <Button component={Link} to="/blog" sx={{ my: 2, color: 'black', display: 'block', marginLeft: 4 }}>
               Blog

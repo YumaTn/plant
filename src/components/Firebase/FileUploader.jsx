@@ -90,7 +90,7 @@ const FileUploader = ({ onUploadSuccess, defaultImage }) => {
         onClick={handleUpload}
         disabled={uploading || !file}
       >
-        Upload
+        Tải ảnh lên
       </Button>
     </Box>
   );

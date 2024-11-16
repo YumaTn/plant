@@ -80,14 +80,14 @@ const AppBar = styled(MuiAppBar, {
   ],
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })( 
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     '& .MuiDrawer-paper': {
-      backgroundColor: '#FF5733', 
+      backgroundColor: '#FF5733',
     },
     variants: [
       {
@@ -96,7 +96,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           ...openedMixin(theme),
           '& .MuiDrawer-paper': {
             ...openedMixin(theme),
-            backgroundColor: '#F5F5DC', 
+            backgroundColor: '#F5F5DC',
           },
         },
       },
@@ -141,16 +141,18 @@ export default function AdminNavbar() {
 
   const getTitle = () => {
     switch (location.pathname) {
+      case '/admin':
+        return 'Dữ liệu';
+      case '/admin/order':
+        return 'Sản phẩm đã bán';
       case '/admin/product':
         return 'Sản phẩm';
       case '/admin/blog':
         return 'Blog';
-      case '/admin/profile':
-        return 'Thông tin cá nhân';
       case '/admin/manageUser':
         return 'Quản lý người dùng';
-      case '/admin':
-        return 'Dữ liệu';
+      case '/admin/profile':
+        return 'Thông tin cá nhân';
       default:
         return '';
     }
@@ -184,37 +186,37 @@ export default function AdminNavbar() {
         <Divider />
         <List>
           <ListItem button onClick={() => handleNavigation('/admin', 0)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={selectedIndex === 0} sx={{ backgroundColor: selectedIndex === 0 ? '#D9D9D9' : 'transparent' }}>
+            <ListItemButton selected={selectedIndex === 0} sx={{ backgroundColor: selectedIndex === 0 ? '#FA8232' : 'transparent','&:hover': { backgroundColor: '#FA8232' },'&.Mui-selected': { backgroundColor: '#FA8232' },'&.Mui-selected:hover': { backgroundColor: '#FA8232' }, }}>
               <ListItemIcon><DashboardIcon /></ListItemIcon>
               <ListItemText primary="Dữ liệu" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/order', 2)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={selectedIndex === 2} sx={{ backgroundColor: selectedIndex === 2 ? '#D9D9D9' : 'transparent' }}>
+          <ListItem button onClick={() => handleNavigation('/admin/order', 1)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 1} sx={{ backgroundColor: selectedIndex === 1 ? '#FA8232' : 'transparent','&:hover': { backgroundColor: '#FA8232' },'&.Mui-selected': { backgroundColor: '#FA8232' },'&.Mui-selected:hover': { backgroundColor: '#FA8232' }, }}>
               <ListItemIcon><ReceiptLongIcon /></ListItemIcon>
               <ListItemText primary="Sản phẩm đã bán" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/product', 1)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={selectedIndex === 1} sx={{ backgroundColor: selectedIndex === 1 ? '#D9D9D9' : 'transparent' }}>
+          <ListItem button onClick={() => handleNavigation('/admin/product', 2)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 2} sx={{ backgroundColor: selectedIndex === 2 ? '#FA8232' : 'transparent','&:hover': { backgroundColor: '#FA8232' },'&.Mui-selected': { backgroundColor: '#FA8232' },'&.Mui-selected:hover': { backgroundColor: '#FA8232' }, }}>
               <ListItemIcon><CategoryIcon /></ListItemIcon>
               <ListItemText primary="Sản phẩm" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/blog', 2)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={selectedIndex === 2} sx={{ backgroundColor: selectedIndex === 2 ? '#D9D9D9' : 'transparent' }}>
+          <ListItem button onClick={() => handleNavigation('/admin/blog', 3)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 3} sx={{ backgroundColor: selectedIndex === 3 ? '#FA8232' : 'transparent','&:hover': { backgroundColor: '#FA8232' },'&.Mui-selected': { backgroundColor: '#FA8232' },'&.Mui-selected:hover': { backgroundColor: '#FA8232' }, }}>
               <ListItemIcon><BookIcon /></ListItemIcon>
               <ListItemText primary="Blog" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/manageUser', 3)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={selectedIndex === 3} sx={{ backgroundColor: selectedIndex === 3 ? '#D9D9D9' : 'transparent' }}>
+          <ListItem button onClick={() => handleNavigation('/admin/manageUser', 4)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 4} sx={{ backgroundColor: selectedIndex === 4 ? '#FA8232' : 'transparent','&:hover': { backgroundColor: '#FA8232' },'&.Mui-selected': { backgroundColor: '#FA8232' },'&.Mui-selected:hover': { backgroundColor: '#FA8232' }, }}>
               <ListItemIcon><GroupIcon /></ListItemIcon>
               <ListItemText primary="Quản lý người dùng" />
             </ListItemButton>
           </ListItem>
-          <ListItem button onClick={() => handleNavigation('/admin/profile', 4)} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={selectedIndex === 4} sx={{ backgroundColor: selectedIndex === 4 ? '#D9D9D9' : 'transparent' }}>
+          <ListItem button onClick={() => handleNavigation('/admin/profile', 5)} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton selected={selectedIndex === 5} sx={{ backgroundColor: selectedIndex === 5 ? '#FA8232' : 'transparent','&:hover': { backgroundColor: '#FA8232' },'&.Mui-selected': { backgroundColor: '#FA8232' },'&.Mui-selected:hover': { backgroundColor: '#FA8232' }, }}>
               <ListItemIcon><AccountCircleIcon /></ListItemIcon>
               <ListItemText primary="Thông tin cá nhân" />
             </ListItemButton>
