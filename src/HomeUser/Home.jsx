@@ -83,7 +83,7 @@ const Home = () => {
           fontWeight: 'bold'
         }}
       >
-        Chúng tôi chỉ bán câu chuyện - Không bán sản phẩm
+        Chúng tôi chỉ bán câu chuyện thông qua các sản phẩm
       </Typography>
       <HomeBannerUnder />
       <CategoryHome />
