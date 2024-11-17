@@ -47,7 +47,7 @@ export default function FolderList() {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <nav aria-label="main mailbox folders">
-        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 550, textAlign: 'start', padding: 1, marginLeft: 2 }}>ACCOUNT INFO</Typography>} />
+        <ListItemText primary={<Typography variant="body2" sx={{ fontSize: '14px', fontWeight: 550, textAlign: 'start', padding: 1, marginLeft: 2 }}>Thông tin người dùng</Typography>} />
       </nav>
       <Divider />
       <ListItem>
