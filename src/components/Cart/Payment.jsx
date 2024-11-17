@@ -111,7 +111,7 @@ const Payment = () => {
   const handlePayment = () => {
     // Check if any of the required fields are empty
     if (!userData.userName || !userData.phoneNumber || !userData.email || !userData.address) {
-      setErrorMessage('Please fill in all the required fields (User Name, Phone, Email, and Address).');
+      setErrorMessage('Vui lòng tới trang thông tin cá nhân và cập nhật thông tin người dùng');
       setOpenSnackbar(true);
       return;
     }
