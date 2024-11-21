@@ -31,34 +31,37 @@ const AdminOrder = () => {
         fetchOrders();
     }, [currentPage]);
 
-    // Nhóm đơn hàng theo `orderId`
-    const groupedOrders = orders
-        .filter(order => new Date(order.date).toLocaleDateString('vi-VN') !== '1/1/1') // Lọc các dòng có ngày hợp lệ
-        .reduce((acc, order) => {
-            const { id, userName, couponId, date, orderDetails } = order;
+    // Nhóm đơn hàng theo `orderId` và sắp xếp theo ngày
+const groupedOrders = orders
+.filter(order => new Date(order.date).toLocaleDateString('vi-VN') !== '1/1/1') // Lọc các dòng có ngày hợp lệ
+.reduce((acc, order) => {
+    const { id, userName, couponId, date, orderDetails } = order;
 
-            // Tính tổng giá cho orderId
-            const totalPrice = orderDetails.reduce((sum, detail) => sum + detail.price * detail.quantity, 0);
+    // Tính tổng giá cho orderId
+    const totalPrice = orderDetails.reduce((sum, detail) => sum + detail.price * detail.quantity, 0);
 
-            // Nếu chưa có, khởi tạo
-            if (!acc[id]) {
-                acc[id] = {
-                    id,
-                    userName,
-                    couponId,
-                    date,
-                    totalPrice,
-                    products: [],
-                };
-            }
+    // Nếu chưa có, khởi tạo
+    if (!acc[id]) {
+        acc[id] = {
+            id,
+            userName,
+            couponId,
+            date,
+            totalPrice,
+            products: [],
+        };
+    }
 
-            // Gom tất cả sản phẩm vào `products`
-            acc[id].products.push(...orderDetails);
+    // Gom tất cả sản phẩm vào `products`
+    acc[id].products.push(...orderDetails);
 
-            return acc;
-        }, {});
+    return acc;
+}, {});
 
-    const displayedOrders = Object.values(groupedOrders);
+// Sắp xếp theo ngày từ mới nhất đến cũ nhất
+const displayedOrders = Object.values(groupedOrders).sort(
+(a, b) => new Date(b.date) - new Date(a.date)
+);
 
     return (
         <Box sx={{ p: 3 }}>
