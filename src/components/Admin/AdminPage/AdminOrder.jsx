@@ -4,34 +4,11 @@ import PagingAll from '../../Staff/Staff/PagingAll';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 
 const AdminOrder = () => {
-    const [orders, setOrders] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [orders, setOrders] = useState([]);  // Dữ liệu đơn hàng
+    const [currentPage, setCurrentPage] = useState(1);  // Trang hiện tại
+    const [totalPages, setTotalPages] = useState(1);  // Tổng số trang
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.post('https://exe201be.io.vn/api/order/search', {
-                    pageNum: currentPage,
-                    pageSize: 10,
-                    status: 2,
-                });
-
-                if (response.data.success) {
-                    setOrders(response.data.data.pageData); // Cập nhật danh sách đơn hàng
-                    setTotalPages(response.data.data.pageInfo.totalPage); // Cập nhật tổng số trang
-                } else {
-                    console.error('Failed to fetch orders');
-                }
-            } catch (error) {
-                console.error('Error fetching orders:', error);
-            }
-        };
-
-        fetchOrders();
-    }, [currentPage]);
-
-    // Lấy tất cả đơn hàng
+    // Hàm lấy tất cả đơn hàng
     const fetchAllOrders = async () => {
         try {
             let allOrders = [];
@@ -64,55 +41,101 @@ const AdminOrder = () => {
         }
     };
 
-    // Nhóm và sắp xếp đơn hàng
-    const processOrders = (orders) => {
-        const groupedOrders = orders
-            .filter(order => new Date(order.date).toLocaleDateString('vi-VN') !== '1/1/1') // Lọc các dòng có ngày hợp lệ
-            .reduce((acc, order) => {
-                const { id, userName, couponId, date, orderDetails } = order;
+    // Hàm nhóm sản phẩm theo orderId và sắp xếp
+    const groupAndSortProducts = (products) => {
+        const grouped = products.reduce((acc, product) => {
+            const { orderId, userName, couponId, date, totalPrice, productName, quantity, price } = product;
 
-                // Tính tổng giá cho orderId
-                const totalPrice = orderDetails.reduce((sum, detail) => sum + detail.price * detail.quantity, 0);
+            if (!acc[orderId]) {
+                acc[orderId] = {
+                    orderId,
+                    userName,
+                    couponId,
+                    date,
+                    totalPrice,
+                    products: [],
+                };
+            }
 
-                // Nếu chưa có, khởi tạo
-                if (!acc[id]) {
-                    acc[id] = {
-                        id,
-                        userName,
-                        couponId,
-                        date,
-                        totalPrice,
-                        products: [],
-                    };
-                }
+            // Thêm sản phẩm vào nhóm của `orderId`
+            acc[orderId].products.push({ productName, quantity, price });
+            return acc;
+        }, {});
 
-                // Gom tất cả sản phẩm vào `products`
-                acc[id].products.push(...orderDetails);
-
-                return acc;
-            }, {});
-
-        // Sắp xếp theo ngày từ mới nhất đến cũ nhất
-        return Object.values(groupedOrders).sort(
-            (a, b) => new Date(b.date) - new Date(a.date)
-        );
+        // Chuyển thành mảng và sắp xếp theo ngày (mới nhất trước)
+        return Object.values(grouped).sort((a, b) => new Date(b.date) - new Date(a.date));
     };
+
+    // Hàm xử lý tất cả đơn hàng và phân trang
+    const fetchAndProcessGroupedOrders = async () => {
+        const allOrders = await fetchAllOrders();
+
+        // Gom tất cả sản phẩm từ đơn hàng
+        const products = allOrders.flatMap((order) =>
+            order.orderDetails.map((product) => ({
+                orderId: order.id,
+                userName: order.userName,
+                couponId: order.couponId,
+                date: order.date,
+                productName: product.productName,
+                quantity: product.quantity,
+                price: product.price,
+                totalPrice: product.price * product.quantity,
+            }))
+        );
+
+        // Lọc các sản phẩm có ngày hợp lệ
+        const filteredProducts = products.filter(
+            (product) => new Date(product.date).toLocaleDateString('vi-VN') !== '1/1/1'
+        );
+
+        // Nhóm và sắp xếp
+        const groupedOrders = groupAndSortProducts(filteredProducts);
+
+        // Phân trang
+        const pageSize = 10;
+        const paginatedOrders = groupedOrders.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+        setOrders(paginatedOrders); // Dữ liệu của trang hiện tại
+        setTotalPages(Math.ceil(groupedOrders.length / pageSize)); // Tổng số trang
+    };
+
+    useEffect(() => {
+        fetchAndProcessGroupedOrders();
+    }, [currentPage]);
 
     // Xuất CSV
     const downloadCSV = async () => {
-        // Lấy toàn bộ dữ liệu đơn hàng
         const allOrders = await fetchAllOrders();
-        const processedOrders = processOrders(allOrders);
+        const products = allOrders.flatMap((order) =>
+            order.orderDetails.map((product) => ({
+                orderId: order.id,
+                userName: order.userName,
+                couponId: order.couponId,
+                date: order.date,
+                productName: product.productName,
+                quantity: product.quantity,
+                price: product.price,
+                totalPrice: product.price * product.quantity,
+            }))
+        );
+
+        // Lọc các sản phẩm có ngày hợp lệ
+        const filteredProducts = products.filter(
+            (product) => new Date(product.date).toLocaleDateString('vi-VN') !== '1/1/1'
+        );
+
+        // Nhóm và sắp xếp
+        const groupedOrders = groupAndSortProducts(filteredProducts);
 
         // Chuẩn bị dữ liệu CSV
         const csvRows = [
             ['ID', 'Tên người dùng', 'Mã coupon', 'Tổng giá', 'Ngày đặt', 'Tên sản phẩm', 'Số lượng'], // Header
         ];
 
-        processedOrders.forEach((order) => {
+        groupedOrders.forEach((order) => {
             order.products.forEach((product) => {
                 csvRows.push([
-                    order.id,
+                    order.orderId,
                     order.userName,
                     order.couponId === "DEFAULT" ? "Không có mã giảm giá" : order.couponId,
                     order.totalPrice,
@@ -146,7 +169,7 @@ const AdminOrder = () => {
 
             {/* Nút tải xuống CSV */}
             <Button variant="contained" color="primary" onClick={downloadCSV} sx={{ mb: 2 }}>
-                Xuất ra file excel
+                Xuất ra file Excel
             </Button>
 
             {/* Hiển thị bảng đơn hàng */}
@@ -164,9 +187,9 @@ const AdminOrder = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {processOrders(orders).map((order) => (
-                            <TableRow key={order.id}>
-                                <TableCell>{order.id}</TableCell>
+                        {orders.map((order) => (
+                            <TableRow key={order.orderId}>
+                                <TableCell>{order.orderId}</TableCell>
                                 <TableCell sx={{ color: 'green' }}>{order.userName}</TableCell>
                                 <TableCell>
                                     {order.couponId === "DEFAULT" ? "Không có mã giảm giá" : order.couponId}
@@ -174,9 +197,7 @@ const AdminOrder = () => {
                                 <TableCell sx={{ color: 'red' }}>
                                     {order.totalPrice.toLocaleString('vi-VN')} VNĐ
                                 </TableCell>
-                                <TableCell>
-                                    {new Date(order.date).toLocaleDateString('vi-VN')}
-                                </TableCell>
+                                <TableCell>{new Date(order.date).toLocaleDateString('vi-VN')}</TableCell>
                                 <TableCell sx={{ color: 'brown' }}>
                                     {order.products.map((product, index) => (
                                         <Typography key={index}>{product.productName}</Typography>
